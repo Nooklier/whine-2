@@ -19,7 +19,10 @@ class User(db.Model, UserMixin):
     last_name = db.Column(db.String(40), nullable=False)
     username = db.Column(db.String(40), nullable=False, unique=True)
     hashed_password = db.Column(db.String(255), nullable=False)
-    role = db.Column(db.Enum(UserRole), nullable=False, unique=True)
+    role = db.Column(db.Enum(UserRole), nullable=False)
+
+    # Relationship to TimeOffRequests
+    time_off_requests = db.relationship('TimeOffRequest', backref='user', lazy=True)
 
     @property
     def password(self):
@@ -38,6 +41,5 @@ class User(db.Model, UserMixin):
             'first_name': self.first_name,
             'last_name': self.last_name,
             'username': self.username,
-            'hashed_password': self.hashed_password,
             'role': self.role
         }
