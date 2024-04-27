@@ -17,7 +17,7 @@ class Shift(db.Model):
         return {
             'id': self.id,
             'user_id': self.user_id,
-            'shift_date': self.shift_date,
-            'shift_start': self.shift_start,
-            'shift_end': self.shift_end,
+            'shift_date': self.shift_date.strftime('%Y-%m-%d'),
+            'shift_start': self.shift_start.strftime('%H:%M'),  
+            'shift_end': self.shift_end.strftime('%H:%M')   
         }

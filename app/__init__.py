@@ -9,6 +9,7 @@ from .api.user_routes import user_routes
 from .api.auth_routes import auth_routes
 from .api.paid_time_off_routes import pto_routes  
 from .api.time_off_request_routes import time_off_routes
+from .api.shift_routes import shift_routes
 from .seeds import seed_commands
 from .config import Config
 
@@ -32,6 +33,7 @@ app.register_blueprint(user_routes, url_prefix='/api/users')
 app.register_blueprint(auth_routes, url_prefix='/api/auth')
 app.register_blueprint(pto_routes, url_prefix='/api/pto')
 app.register_blueprint(time_off_routes, url_prefix='/api/timeoff')
+app.register_blueprint(shift_routes, url_prefix='/api/shift')
 db.init_app(app)
 Migrate(app, db)
 
