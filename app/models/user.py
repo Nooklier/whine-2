@@ -21,9 +21,11 @@ class User(db.Model, UserMixin):
     hashed_password = db.Column(db.String(255), nullable=False)
     role = db.Column(db.Enum(UserRole), nullable=False)
 
-    # Relationship to TimeOffRequests
-    time_off_requests = db.relationship('TimeOffRequest', backref='requester', lazy=True)
-    paid_time_offs = db.relationship('PaidTimeOff', backref='user', lazy=True)
+    # Relationships
+    shifts = db.relationship('Shift', backref='user', lazy=True)  
+    paid_time_offs = db.relationship('PaidTimeOff', backref='user', lazy=True)  
+    time_off_requests = db.relationship('TimeOffRequest', backref='user', lazy=True)  
+
 
     @property
     def password(self):
@@ -42,5 +44,5 @@ class User(db.Model, UserMixin):
             'first_name': self.first_name,
             'last_name': self.last_name,
             'username': self.username,
-            'role': self.role
+            'role': self.role.value
         }

@@ -10,7 +10,11 @@ class PaidTimeOff(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')), nullable=False)
     total_hours = db.Column(db.Integer, default=0)
     used_hours = db.Column(db.Integer, default=0)
-    remaining_hours = db.Column(db.Integer, default=0)
+    
+    @property
+    def remaining_hours(self):
+        return self.total_hours - self.used_hours
+
 
     def to_dict(self):
         return {
