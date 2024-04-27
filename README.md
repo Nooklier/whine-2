@@ -242,3 +242,61 @@ This documentation outlines the API endpoints related to managing Time Off Reque
   - **403 Forbidden:** Error response if the user does not have permission.
   - **404 Not Found:** Error response if no time off request is found.
 
+
+# Shift API Documentation
+
+This documentation outlines the API endpoints related to managing shifts within a Flask application. It includes functionalities for creating, retrieving, updating, and deleting shifts.
+
+## Endpoints
+
+### Create Shift
+
+- **Method:** `POST`
+- **Endpoint:** `/create`
+- **Description:** Creates a new shift for the current user.
+- **Payload:**
+  - `shift_date`: Date (required, format: YYYY-MM-DD)
+  - `shift_start`: Time (required, format: HH:MM)
+  - `shift_end`: Time (required, format: HH:MM)
+- **Authorization:** Login required.
+- **Responses:**
+  - **201 Created:** Returns the newly created shift's data.
+  - **400 Bad Request:** Error response if required fields are missing or the data is invalid.
+  - **409 Conflict:** Error response if a shift already exists for the same user at the same date and time.
+
+### Get My Shifts
+
+- **Method:** `GET`
+- **Endpoint:** `/current`
+- **Description:** Retrieves all shifts for the currently logged-in user.
+- **Authorization:** Login required.
+- **Responses:**
+  - **200 OK:** Returns a list of shifts for the current user.
+
+### Update Shift
+
+- **Method:** `PUT`
+- **Endpoint:** `/update/<int:shift_id>`
+- **Description:** Updates an existing shift. Allowed for managers or shift owners (except for their own shifts).
+- **Payload:**
+  - `shift_date`: Date (required, format: YYYY-MM-DD)
+  - `shift_start`: Time (required, format: HH:MM)
+  - `shift_end`: Time (required, format: HH:MM)
+- **Authorization:** Managers or shift owners (except for their own shifts).
+- **Responses:**
+  - **200 OK:** Returns the updated shift's data.
+  - **400 Bad Request:** Error response if required fields are missing or the data is invalid.
+  - **403 Forbidden:** Error response if the user does not have permission.
+  - **404 Not Found:** Error response if the shift is not found.
+
+### Delete Shift
+
+- **Method:** `DELETE`
+- **Endpoint:** `/delete/<int:shift_id>`
+- **Description:** Deletes a shift. Allowed for managers or shift owners (except for their own shifts).
+- **Authorization:** Managers or shift owners (except for their own shifts).
+- **Responses:**
+  - **200 OK:** Success message indicating the shift was deleted successfully.
+  - **403 Forbidden:** Error response if the user does not have permission.
+  - **404 Not Found:** Error response if the shift is not found.
+
