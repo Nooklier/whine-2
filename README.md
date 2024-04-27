@@ -54,3 +54,70 @@ This documentation outlines the API endpoints involved in managing user authenti
 - **Description:** Provides an error response when a user is unauthorized.
 - **Responses:**
   - **401 Unauthorized:** Error message indicating the user is unauthorized.
+
+# Users API Documentation
+
+This documentation describes the API endpoints related to user management in a Flask application, including retrieving all users, fetching a specific user by ID, updating user details, and deleting users.
+
+## Endpoints
+
+### Get All Users
+
+- **Method:** `GET`
+- **Endpoint:** `/`
+- **Description:** Retrieves all users from the database.
+- **Authorization:** Login required.
+- **Responses:**
+  - **200 OK:** Returns a list of all users.
+
+### Get User by ID
+
+- **Method:** `GET`
+- **Endpoint:** `/<int:id>`
+- **Description:** Fetches a specific user by their unique ID.
+- **Authorization:** Login required.
+- **Responses:**
+  - **200 OK:** Returns the user's data if found.
+  - **404 Not Found:** Error response if no user is found.
+
+### Update Current User
+
+- **Method:** `PUT`
+- **Endpoint:** `/update`
+- **Description:** Updates the currently logged-in user's information.
+- **Payload:**
+  - `first_name`: String (optional)
+  - `last_name`: String (optional)
+  - `username`: String (optional)
+  - `password`: String (optional)
+- **Responses:**
+  - **200 OK:** Returns the updated user's data.
+  - **401 Unauthorized:** Error response if the user is not logged in.
+
+### Update User by ID
+
+- **Method:** `PUT`
+- **Endpoint:** `/update/<int:user_id>`
+- **Description:** Updates a specific user's details by ID. Restricted to users with Manager role.
+- **Authorization:** Manager role required.
+- **Payload:**
+  - `first_name`: String (optional)
+  - `last_name`: String (optional)
+  - `username`: String (optional)
+  - `password`: String (optional)
+- **Responses:**
+  - **200 OK:** Returns the updated user's data.
+  - **403 Forbidden:** Error response if the user does not have permission.
+  - **404 Not Found:** Error response if no user is found.
+
+### Delete User by ID
+
+- **Method:** `DELETE`
+- **Endpoint:** `/delete/<int:user_id>`
+- **Description:** Deletes a user by their ID. Restricted to users with Manager role.
+- **Authorization:** Manager role required.
+- **Responses:**
+  - **200 OK:** Success message indicating user was deleted successfully.
+  - **403 Forbidden:** Error response if the user does not have permission.
+  - **404 Not Found:** Error response if no user is found.
+
