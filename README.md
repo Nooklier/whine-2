@@ -1,5 +1,9 @@
 # Authentication API Documentation
 
+This documentation outlines the API endpoints involved in managing user authentication within a Flask application. It includes functionalities for checking user authentication, logging in, logging out, and signing up users.
+
+## Endpoints
+
 ### Authenticate
 
 - **Method:** `GET`
