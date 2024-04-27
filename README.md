@@ -173,3 +173,72 @@ This documentation outlines the API endpoints related to managing Paid Time Off 
   - **200 OK:** Success message indicating the PTO record was deleted successfully.
   - **403 Forbidden:** Error response if the user does not have permission.
   - **404 Not Found:** Error response if no PTO record is found.
+ 
+
+# Time Off API Documentation
+
+This documentation outlines the API endpoints related to managing Time Off Requests within a Flask application. It includes functionalities for creating, retrieving, updating, and deleting time off requests.
+
+## Endpoints
+
+### Create Time Off Request
+
+- **Method:** `POST`
+- **Endpoint:** `/create`
+- **Description:** Creates a new time off request for the current user.
+- **Payload:**
+  - `start_date`: Date (required, format: YYYY-MM-DD)
+  - `end_date`: Date (required, format: YYYY-MM-DD)
+  - `pto_use`: Integer (optional, defaults to 0)
+- **Authorization:** Login required.
+- **Responses:**
+  - **201 Created:** Returns the newly created time off request's data.
+  - **400 Bad Request:** Error response if required fields are missing or the data is invalid.
+
+### Get Time Off Requests for Current User
+
+- **Method:** `GET`
+- **Endpoint:** `/current`
+- **Description:** Retrieves all time off requests made by the currently logged-in user.
+- **Authorization:** Login required.
+- **Responses:**
+  - **200 OK:** Returns a list of time off requests.
+  
+### Get All Time Off Requests
+
+- **Method:** `GET`
+- **Endpoint:** `/all`
+- **Description:** Fetches all time off requests across all users. Restricted to users with Manager role.
+- **Authorization:** Manager role required.
+- **Responses:**
+  - **200 OK:** Returns a detailed list of all time off requests with user details.
+  - **403 Forbidden:** Error response if the user does not have permission.
+  - **404 Not Found:** Error response if no time off requests are found.
+
+### Update Time Off Request
+
+- **Method:** `PUT`
+- **Endpoint:** `/update/<int:request_id>`
+- **Description:** Updates an existing time off request. Allowed for the request owner or a manager.
+- **Payload:**
+  - `start_date`: Date (optional, format: YYYY-MM-DD)
+  - `end_date`: Date (optional, format: YYYY-MM-DD)
+  - `pto_use`: Integer (optional)
+- **Authorization:** The owner of the request or a manager.
+- **Responses:**
+  - **200 OK:** Returns the updated time off request's data.
+  - **400 Bad Request:** Error response if the input data is invalid.
+  - **403 Forbidden:** Error response if the user does not have permission.
+  - **404 Not Found:** Error response if no time off request is found.
+
+### Delete Time Off Request
+
+- **Method:** `DELETE`
+- **Endpoint:** `/delete/<int:request_id>`
+- **Description:** Deletes a time off request. Allowed for the request owner or a manager.
+- **Authorization:** The owner of the request or a manager.
+- **Responses:**
+  - **200 OK:** Success message indicating the time off request was deleted successfully.
+  - **403 Forbidden:** Error response if the user does not have permission.
+  - **404 Not Found:** Error response if no time off request is found.
+
