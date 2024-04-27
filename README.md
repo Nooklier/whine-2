@@ -121,3 +121,55 @@ This documentation describes the API endpoints related to user management in a F
   - **403 Forbidden:** Error response if the user does not have permission.
   - **404 Not Found:** Error response if no user is found.
 
+# PTO API Documentation
+
+This documentation outlines the API endpoints related to managing Paid Time Off (PTO) in a Flask application. It covers retrieving PTO records, updating, and deleting PTO entries.
+
+## Endpoints
+
+### Get Current User's PTO
+
+- **Method:** `GET`
+- **Endpoint:** `/current`
+- **Description:** Retrieves all PTO records for the currently logged-in user.
+- **Authorization:** Login required.
+- **Responses:**
+  - **200 OK:** Returns a list of PTO records.
+  - **404 Not Found:** Error response if no PTO records are found.
+
+### View All PTO
+
+- **Method:** `GET`
+- **Endpoint:** `/all`
+- **Description:** Fetches all PTO records across all users. Restricted to users with Manager role.
+- **Authorization:** Manager role required.
+- **Responses:**
+  - **200 OK:** Returns a detailed list of all PTO records with user details.
+  - **403 Forbidden:** Error response if the user does not have permission.
+  - **404 Not Found:** Error response if no PTO records are found.
+
+### Update PTO by User ID
+
+- **Method:** `PUT`
+- **Endpoint:** `/update/<int:pto_id>`
+- **Description:** Updates the PTO entry for a specific user by PTO ID. Restricted to users with Manager role.
+- **Authorization:** Manager role required.
+- **Payload:**
+  - `total_hours`: Integer (optional)
+  - `used_hours`: Integer (optional)
+- **Responses:**
+  - **200 OK:** Returns the updated PTO record's data.
+  - **400 Bad Request:** Error response if the input data is invalid.
+  - **403 Forbidden:** Error response if the user does not have permission.
+  - **404 Not Found:** Error response if no PTO record is found.
+
+### Delete PTO
+
+- **Method:** `DELETE`
+- **Endpoint:** `/delete/<int:pto_id>`
+- **Description:** Deletes a PTO record by its ID. Restricted to users with Manager role.
+- **Authorization:** Manager role required.
+- **Responses:**
+  - **200 OK:** Success message indicating the PTO record was deleted successfully.
+  - **403 Forbidden:** Error response if the user does not have permission.
+  - **404 Not Found:** Error response if no PTO record is found.
