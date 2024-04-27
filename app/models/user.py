@@ -2,6 +2,7 @@ from .db import db, environment, SCHEMA, add_prefix_for_prod
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 from enum import Enum
+from sqlalchemy.orm import relationship
 
 class UserRole(Enum):
     Employee = 'employee'
@@ -22,9 +23,9 @@ class User(db.Model, UserMixin):
     role = db.Column(db.Enum(UserRole), nullable=False)
 
     # Relationships
-    shifts = db.relationship('Shift', backref='user', lazy=True)  
-    paid_time_offs = db.relationship('PaidTimeOff', backref='user', lazy=True)  
-    time_off_requests = db.relationship('TimeOffRequest', backref='user', lazy=True)  
+    shifts = db.relationship('Shift', backref='user', lazy=True, cascade="all, delete-orphan")  
+    paid_time_offs = db.relationship('PaidTimeOff', backref='user', lazy=True, cascade="all, delete-orphan")  
+    time_off_requests = db.relationship('TimeOffRequest', backref='user', lazy=True, cascade="all, delete-orphan")  
 
 
     @property
