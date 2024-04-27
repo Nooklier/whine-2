@@ -23,6 +23,7 @@ class User(db.Model, UserMixin):
 
     # Relationship to TimeOffRequests
     time_off_requests = db.relationship('TimeOffRequest', backref='requester', lazy=True)
+    paid_time_offs = db.relationship('PaidTimeOff', backref='user', lazy=True)
 
     @property
     def password(self):
