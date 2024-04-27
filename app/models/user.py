@@ -22,7 +22,7 @@ class User(db.Model, UserMixin):
     role = db.Column(db.Enum(UserRole), nullable=False)
 
     # Relationship to TimeOffRequests
-    time_off_requests = db.relationship('TimeOffRequest', backref='user', lazy=True)
+    time_off_requests = db.relationship('TimeOffRequest', backref='requester', lazy=True)
 
     @property
     def password(self):

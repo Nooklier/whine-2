@@ -1,20 +1,51 @@
-from app.models import db, User, environment, SCHEMA
+from app.models import db, User, UserRole, environment, SCHEMA
 from sqlalchemy.sql import text
 
+def seed_users():
+
+    users_seed_data = [
+        User(
+            first_name="John",
+            last_name="Doe",
+            username="johndoe",
+            password="password1",
+            role=UserRole.Employee
+        ),
+        User(
+            first_name="Jane",
+            last_name="Smith",
+            username="janesmith",
+            password="password2",
+            role=UserRole.Manager
+        ),
+        User(
+            first_name="Alice",
+            last_name="Johnson",
+            username="alicejohnson",
+            password="password3",
+            role=UserRole.Employee
+        ),
+        User(
+            first_name="Bob",
+            last_name="Brown",
+            username="bobbrown",
+            password="password4",
+            role=UserRole.Manager
+        ),
+        User(
+            first_name="Charlie",
+            last_name="Davis",
+            username="charliedavis",
+            password="password5",
+            role=UserRole.Employee
+        )
+    ]
+
+    for user in users_seed_data:
+        db.session.add(user)
+        db.session.commit()
 
 # Adds a demo user, you can add other users here if you want
-def seed_users():
-    demo = User(
-        username='Demo', email='demo@aa.io', password='password')
-    marnie = User(
-        username='marnie', email='marnie@aa.io', password='password')
-    bobbie = User(
-        username='bobbie', email='bobbie@aa.io', password='password')
-
-    db.session.add(demo)
-    db.session.add(marnie)
-    db.session.add(bobbie)
-    db.session.commit()
 
 
 # Uses a raw SQL query to TRUNCATE or DELETE the users table. SQLAlchemy doesn't
