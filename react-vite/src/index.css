@@ -1,1 +1,14 @@
-/* TODO: Add sitewide styles */
+html {
+ background: linear-gradient(
+    90deg,
+    #0cc0df,
+    #ffde59
+ )
+}
+
+
+.logo {
+   width: 100px;
+   height: 40px;
+   cursor: pointer;
+}
