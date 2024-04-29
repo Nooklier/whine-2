@@ -3,6 +3,8 @@ import LoginFormPage from '../components/LoginFormPage';
 import SignupFormPage from '../components/SignupFormPage';
 import Homepage from '../components/Homepage/Homepage';
 import Dashboard from '../components/Dashboard/Dashboard';
+import Shifts from '../components/Shift/Shift';
+import ShiftDetails from '../components/Shift/ShiftDetails';
 import Layout from './Layout';
 
 export const router = createBrowserRouter([
@@ -24,6 +26,14 @@ export const router = createBrowserRouter([
       {
         path: 'dashboard',
         element: <Dashboard />
+      },
+      {
+        path: 'shift',
+        element: <Shifts /> 
+      },
+      {
+        path: 'shift/:shiftId', 
+        element: <ShiftDetails /> 
       }
     ],
   },

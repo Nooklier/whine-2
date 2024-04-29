@@ -1,4 +1,4 @@
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { thunkLogout } from "../../redux/session"
 import logo from "../../../photos/logo.png"
@@ -7,7 +7,8 @@ import "./NavBar.css"
 function NavBar() {
     const location = useLocation()
     const dispatch = useDispatch()
-    const hiddenPaths = ['/login', '/signup', '/dashboard']
+    const { shiftId } = useParams();
+    const hiddenPaths = ['/login', '/signup', '/dashboard', '/shift', `/shift/${shiftId}`];
 
 
     if (hiddenPaths.includes(location.pathname)) {

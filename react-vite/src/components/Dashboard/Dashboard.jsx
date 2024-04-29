@@ -2,10 +2,11 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { fetchShifts } from '../../redux/shift';  
 import "./Dashboard.css";
+import { NavLink } from "react-router-dom";
 
 function Dashboard() {
     const user = useSelector(state => state.session.user);
-    const shifts = useSelector(state => state.shifts.shifts.slice(0, 3))
+    const shifts = useSelector(state => state.shifts.shifts)
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -22,7 +23,7 @@ function Dashboard() {
                 <div>Menu</div>
                 <div>{user.first_name} {user.last_name}</div>
                 <ul>
-                    <li>SCHEDULE</li>
+                    <NavLink to='/shift'>SCHEDULE</NavLink>
                     <li>TIME OFF REQUEST</li>
                     <li>PTO</li>
                 </ul>

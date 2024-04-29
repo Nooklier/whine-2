@@ -53,7 +53,16 @@ def create_shift():
 @login_required
 def get_my_shifts():
     shifts = Shift.query.filter_by(user_id=current_user.id).all()
+    
+    # Loop through each shift and set the 'available' field to False if 'user_id' is not None
+    for shift in shifts:
+        if shift.user_id is not None:
+            shift.available = False
+    
+    db.session.commit()  # Commit the changes (if any)
+    
     return jsonify([shift.to_dict() for shift in shifts]), 200
+
 
 
 
@@ -167,3 +176,14 @@ def pickup_shift(shift_id):
     db.session.commit()
 
     return jsonify({"message": f"Shift with ID {shift_id} picked up successfully"}), 200
+
+# Get a shift by shift ID
+@shift_routes.route('/<int:shift_id>', methods=['GET'])
+@login_required
+def get_shift_by_id(shift_id):
+    # Retrieve the shift by shift ID
+    shift = Shift.query.get(shift_id)
+    if not shift:
+        return jsonify({"error": "Shift not found"}), 404
+
+    return jsonify(shift.to_dict()), 200

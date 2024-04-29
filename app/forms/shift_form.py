@@ -21,7 +21,16 @@ def validate_shift_end(form, field):
         if field.data < form.shift_start.data:
             raise ValidationError('Shift end time cannot be before shift start time.')
 
+# Validate available field based on user_id
+def validate_available(form, field):
+    if form.user_id.data is not None: 
+        field.data = False  # Set available to False if user_id is not null
+
 class ShiftForm(FlaskForm):
     shift_date = DateField('Shift Date', validators=[DataRequired(), validate_shift_date])
     shift_start = TimeField('Shift Start Time', validators=[DataRequired(), validate_shift_start])
     shift_end = TimeField('Shift End Time', validators=[DataRequired(), validate_shift_end])
+    available = BooleanField('Available', default=True)
+
+    def validate_available(self, field):
+        validate_available(self, field)
