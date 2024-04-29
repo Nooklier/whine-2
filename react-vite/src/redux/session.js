@@ -1,5 +1,9 @@
+/********************* ACTION TYPES *********************/
+
 const SET_USER = 'session/setUser';
 const REMOVE_USER = 'session/removeUser';
+
+/********************* ACTION CREATORS *********************/
 
 const setUser = (user) => ({
   type: SET_USER,
@@ -9,6 +13,8 @@ const setUser = (user) => ({
 const removeUser = () => ({
   type: REMOVE_USER
 });
+
+/********************* THUNK ACTION CREATORS *********************/
 
 export const thunkAuthenticate = () => async (dispatch) => {
 	const response = await fetch("/api/auth/");
@@ -23,7 +29,6 @@ export const thunkAuthenticate = () => async (dispatch) => {
 };
 
 export const thunkLogin = (credentials) => async dispatch => {
-  console.log(credentials)
   const response = await fetch("/api/auth/login", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -64,6 +69,7 @@ export const thunkLogout = () => async (dispatch) => {
   dispatch(removeUser());
 };
 
+/********************* REDUCERS *********************/
 const initialState = { user: null };
 
 function sessionReducer(state = initialState, action) {

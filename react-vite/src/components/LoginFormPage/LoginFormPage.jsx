@@ -16,7 +16,6 @@ function LoginFormPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(username, password)
 
     const serverResponse = await dispatch(
       thunkLogin({
@@ -28,39 +27,62 @@ function LoginFormPage() {
     if (serverResponse) {
       setErrors(serverResponse);
     } else {
-      navigate("/");
+      navigate("/dashboard");
     }
   };
+  
+  const handleDemoUser = () => {
+    setUsername("janesmith");
+    setPassword("password2");
+  };
 
+  
   return (
-    <>
-      <h1>Log In</h1>
-      {errors.length > 0 &&
-        errors.map((message) => <p key={message}>{message}</p>)}
-      <form onSubmit={handleSubmit}>
-        <label>
-          Username
-          <input
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-          />
-        </label>
-        {errors.username && <p>{errors.username}</p>}
-        <label>
-          Password
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </label>
-        {errors.password && <p>{errors.password}</p>}
-        <button type="submit">Log In</button>
-      </form>
-    </>
+    <div className="login-container">
+
+      <div className="login-inside-container">
+        <h1 className="login-header">Log In</h1>
+        
+        <form className='form-container' onSubmit={handleSubmit}>
+
+          <div className="form-username-password">
+            <div>Username</div>
+            <label>
+              <input
+                type="text"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                required
+                />
+            </label>
+            <div>Password</div>
+            <label>
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                />
+            </label>
+          </div>
+
+
+          <div>
+            {errors.length > 0 && errors.map((message) => <p key={message}>{message}</p>)}
+            {errors.username && <p>{errors.username}</p>}
+            {errors.password && <p>{errors.password}</p>}
+          </div>
+
+          <div className="form-buttons">
+            <button className="form-demo-button" type="button" onClick={handleDemoUser}>Demo User</button>
+            <button className='form-login-button' type="submit">Log In</button>
+          </div>
+
+        </form>
+ 
+      </div>
+
+    </div>
   );
 }
 
