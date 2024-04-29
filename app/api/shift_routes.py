@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
 from app.models import Shift, db, User, UserRole
-from datetime import datetime, time
+from datetime import datetime, time, timedelta
 
 shift_routes = Blueprint('shift_routes', __name__)
 
@@ -113,3 +113,57 @@ def delete_shift(shift_id):
     db.session.delete(shift)
     db.session.commit()
     return jsonify({"message": "Shift deleted successfully"}), 200
+
+
+
+# Filter shifts that are available for pickup by other employees
+@shift_routes.route('/available', methods=['GET'])
+@login_required
+def get_available_shifts():
+    # Query shifts where user_id is None
+    available_shifts = Shift.query.filter(Shift.user_id.is_(None)).all()
+
+    return jsonify([shift.to_dict() for shift in available_shifts]), 200
+
+
+
+
+# Route for picking up a shift by shift_id
+@shift_routes.route('/pickup/<int:shift_id>', methods=['POST'])
+@login_required
+def pickup_shift(shift_id):
+    # Check if the current user is not a manager
+    if current_user.role == UserRole.Manager:
+        return jsonify({"error": "Only employees can pick up shifts"}), 403
+
+    # Retrieve the shift by shift_id
+    shift = Shift.query.get(shift_id)
+    if not shift:
+        return jsonify({"error": "Shift not found"}), 404
+
+    # Check if the shift is already assigned to someone
+    if shift.user_id:
+        return jsonify({"error": "Shift is already assigned to another employee"}), 400
+
+    # Query the database for shifts assigned to the current user within the current week
+    today = datetime.now().date()
+    start_of_week = today - timedelta(days=today.weekday())
+    end_of_week = start_of_week + timedelta(days=6)
+    user_shifts_this_week = Shift.query.filter(
+        Shift.user_id == current_user.id,
+        Shift.shift_date >= start_of_week,
+        Shift.shift_date <= end_of_week
+    ).count()
+
+    # Check if the user already has 5 or more shifts assigned within the current week
+    max_shifts_per_week = 5
+    if user_shifts_this_week >= max_shifts_per_week:
+        return jsonify({"error": "You already have 5 or more shifts assigned for this week"}), 400
+
+    # Assign the shift to the current user
+    shift.user_id = current_user.id
+
+    # Commit changes to the database
+    db.session.commit()
+
+    return jsonify({"message": f"Shift with ID {shift_id} picked up successfully"}), 200

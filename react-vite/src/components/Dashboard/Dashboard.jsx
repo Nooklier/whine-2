@@ -5,7 +5,7 @@ import "./Dashboard.css";
 
 function Dashboard() {
     const user = useSelector(state => state.session.user);
-    const shifts = useSelector(state => state.shifts.shifts)
+    const shifts = useSelector(state => state.shifts.shifts.slice(0, 3))
     const dispatch = useDispatch();
 
     useEffect(() => {
