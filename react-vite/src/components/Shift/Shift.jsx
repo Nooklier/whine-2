@@ -8,11 +8,9 @@ function Shifts() {
     const shifts = useSelector(state => state.shifts.shifts);
     const userId = useSelector(state => state.session.user.id)
 
-    console.log(shifts, '!!!!!!')
-
     useEffect(() => {
         dispatch(fetchShiftsByUserId(userId));
-    }, [dispatch]);
+    }, [dispatch, userId]);
 
     return (
         <div>

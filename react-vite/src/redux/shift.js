@@ -5,8 +5,6 @@ const UPDATE_SHIFT = 'shifts/updateShift';
 const GET_SHIFT_BY_ID = 'shifts/getShiftById';
 const GET_SHIFTS_BY_USER_ID = 'shifts/getShiftsByUserId';
 
-
-
 /********************* ACTION CREATORS *********************/
 
 const getShifts = (shifts) => ({
@@ -97,10 +95,12 @@ export const fetchShiftsByUserId = () => async (dispatch) => {
   }
 };
 
-
 /********************* REDUCERS *********************/
 
-const initialState = { shifts: [] };
+const initialState = { 
+  shifts: []
+};
+
 let updatedShifts;
 
 function shiftsReducer(state = initialState, action) {
@@ -116,8 +116,6 @@ function shiftsReducer(state = initialState, action) {
       return { ...state, shift: action.payload };
     case GET_SHIFTS_BY_USER_ID:
       return { ...state, shifts: action.payload };
-      
-      
       
     default:
       return state;
