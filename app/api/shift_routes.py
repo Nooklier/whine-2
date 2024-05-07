@@ -57,10 +57,28 @@ def get_my_shifts():
     # Convert shifts to dictionary format
     shifts_dict = [shift.to_dict() for shift in shifts]
     
-    db.session.commit()  # Commit the changes (if any)
+    db.session.commit()  
     return jsonify(shifts_dict), 200
 
+# Get all shifts
+@shift_routes.route('/all', methods=['GET'])
+@login_required
+def get_all_shifts():
 
+    # User must be manager role
+    if current_user.role != UserRole.Manager:
+        return jsonify({'message': 'Unauthorized access. Only managers are allowed to view all shifts.'}), 403
+    
+    # Fetch all shift
+    shifts = Shift.query.all()
+    
+    # Convert shifts to dictionary format
+    shifts_dict = [shift.to_dict() for shift in shifts]
+
+    db.session.commit()
+    return jsonify(shifts_dict), 200
+
+    
 
 # Get shift by shift ID
 @shift_routes.route('/<int:shift_id>', methods=['GET'])

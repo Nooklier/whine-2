@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { fetchShifts } from '../../redux/shift';  
 import "./Dashboard.css";
 import { NavLink } from "react-router-dom";
+import { thunkLogout } from "../../redux/session"
 
 function Dashboard() {
     const user = useSelector(state => state.session.user);
@@ -16,6 +17,10 @@ function Dashboard() {
     const handleFetchShifts = async () => {
         await dispatch(fetchShifts());
     };
+
+    const handleLogout = () => {
+        dispatch(thunkLogout())
+    }
 
     return (
         <div className="dashboard-container">
@@ -53,6 +58,7 @@ function Dashboard() {
                 </ul>
                 <button onClick={handleFetchShifts}>Fetch Shifts</button>
             </div>
+            <button onClick={handleLogout}>LOG OUT</button>
         </div>
     );
 }

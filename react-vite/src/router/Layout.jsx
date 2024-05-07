@@ -14,7 +14,7 @@ export default function Layout() {
   }, [dispatch]);
 
   return (
-    <div className="landing-page-container">
+    <div>
       <ModalProvider>
         <NavBar />
         <Navigation />

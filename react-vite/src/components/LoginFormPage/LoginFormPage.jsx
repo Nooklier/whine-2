@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { thunkLogin } from "../../redux/session";
 import { useDispatch, useSelector } from "react-redux";
-import { Navigate, useNavigate } from "react-router-dom";
+import { NavLink, Navigate, useNavigate } from "react-router-dom";
+import logo from "../../../photos/logo.png"
 import "./LoginForm.css";
 
 function LoginFormPage() {
@@ -39,13 +40,16 @@ function LoginFormPage() {
   
   return (
     <div className="login-container">
+      <NavLink to='/' className="login-left">
+        <img className='logo' src={logo} alt="website logo"/>
+      </NavLink>
 
-      <div className="login-inside-container">
-        <h1 className="login-header">Log In</h1>
+      <div className="login-right">
+        <h1 className="login-title">Log In</h1>
         
-        <form className='form-container' onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit}>
 
-          <div className="form-username-password">
+          <div className="username-password-container">
             <div>Username</div>
             <label>
               <input
@@ -73,9 +77,9 @@ function LoginFormPage() {
             {errors.password && <p>{errors.password}</p>}
           </div>
 
-          <div className="form-buttons">
-            <button className="form-demo-button" type="button" onClick={handleDemoUser}>Demo User</button>
-            <button className='form-login-button' type="submit">Log In</button>
+          <div>
+            <button type="button" onClick={handleDemoUser}>Demo User</button>
+            <button type="submit">Log In</button>
           </div>
 
         </form>

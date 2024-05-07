@@ -1,74 +1,35 @@
 .login-container {
     display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    align-content: flex-end;
-    font-family: Arial, Helvetica, sans-serif;
-    color: #faf8f6;
-    height: 100vh;
-    width: 100vw;
-}
-
-.login-inside-container {
-    display: flex;
-    flex-direction: column;
     justify-content: space-between;
-    width: 30vw;
+    background-image: url('../../../photos/login-background.png') !important;
+    background-size: cover !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
     height: 100vh;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
-
-.login-header {
-    display: flex;
-    justify-content: center;
-    margin: 0%;
-    padding-top: 20px;
-    padding-bottom: 20px;
-}
-
-
-
-
-
-.form-container {
+.login-right {
     display: flex;
     flex-direction: column;
-    height: 100vh;
-    width: 30vw;
+    width: 35vw;
 }
 
+.login-title {
+    text-align: center;
+    color: #ffdb59;
+}
 
-.form-username-password {
+.username-password-container {
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    padding-top: 20px;
-    padding-bottom: 20px;
-}
-
-
-
-
-
-.form-buttons {
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-    padding-top: 150%;
-}
-
-.form-login-button {
-    width: 100px;
+    gap: 5px;
     color: #faf8f6;
-    background-color: #444440;
-    border-radius: 10px;
-    cursor: pointer;
 }
 
-.form-demo-button {
-    width: 100px;
-    color: #444440;
+.username-password-container input {
     background-color: transparent;
-    border-radius: 10px;
-    cursor: pointer;
+    border: #faf8f6 solid;
+    border-radius: 5px;
+    width: 300px;
 }

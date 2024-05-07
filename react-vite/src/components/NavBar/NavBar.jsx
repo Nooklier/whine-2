@@ -1,14 +1,12 @@
 import { NavLink, useLocation, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { thunkLogout } from "../../redux/session"
 import logo from "../../../photos/logo.png"
 import "./NavBar.css"
 
 function NavBar() {
     const location = useLocation()
-    const dispatch = useDispatch()
     const { shiftId } = useParams();
-    const hiddenPaths = ['/login', '/signup', '/dashboard', '/shift', `/shift/${shiftId}`];
+    const hiddenPaths = ['/login', '/signup', '/dashboard', '/shift', `/shift/${shiftId}`,];
 
 
     if (hiddenPaths.includes(location.pathname)) {
@@ -17,10 +15,6 @@ function NavBar() {
 
     function showAlert() {
         alert('Feature coming soon!')
-    }
-
-    const handleLogout = () => {
-        dispatch(thunkLogout())
     }
 
     return (
@@ -37,7 +31,6 @@ function NavBar() {
             <NavLink to='/login'>
                 <button className="navbar-login-button">LOG IN</button>
             </NavLink>
-            <button onClick={handleLogout}>LOG OUT</button>
         </div>
     )
 }

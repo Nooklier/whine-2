@@ -1,11 +1,7 @@
 html {
- background: linear-gradient(
-    90deg,
-    #0cc0df,
-    #ffde59
- )
+ background-image: url('../photos/homepage-background.png');
+ background-size: cover;
 }
-
 
 .logo {
    width: 100px;
