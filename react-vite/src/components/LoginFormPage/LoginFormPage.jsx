@@ -44,12 +44,12 @@ function LoginFormPage() {
         <img className='logo' src={logo} alt="website logo"/>
       </NavLink>
 
-      <div className="login-right">
-        <h1 className="login-title">Log In</h1>
+      <div className="login-right-container">
+        <h1>Log In</h1>
         
         <form onSubmit={handleSubmit}>
 
-          <div className="username-password-container">
+          <div className="form-container">
             <div>Username</div>
             <label>
               <input
@@ -77,9 +77,9 @@ function LoginFormPage() {
             {errors.password && <p>{errors.password}</p>}
           </div>
 
-          <div>
-            <button type="button" onClick={handleDemoUser}>Demo User</button>
-            <button type="submit">Log In</button>
+          <div className="buttons-container">
+            <button className='demo-user-button' type="button" onClick={handleDemoUser}>Demo User</button>
+            <button className='login-button' type="submit">Log In</button>
           </div>
 
         </form>
