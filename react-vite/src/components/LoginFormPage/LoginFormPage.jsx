@@ -17,6 +17,7 @@ function LoginFormPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(username, password)
 
     const serverResponse = await dispatch(
       thunkLogin({
