@@ -11,15 +11,17 @@
     background-color: #cbd8bf;
     height: 93vh;
     border-radius: 10px;
-    padding: 15px;
 }
 
-/* LEFT CONTAINER */
+/*************************** LEFT CONTAINER **************************/
 .dashboard-left-container {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     width: 20%;
+    padding-top: 15px;
+    padding-left: 15px;
+    padding-bottom: 15px;
 }
 
 .dashboard-menu {
@@ -29,6 +31,7 @@
     letter-spacing: 2px;
 }
 
+/* SEARCH BAR & NAME SECTION */
 .search-container {
     display: flex;
     position: relative;
@@ -62,6 +65,7 @@
     font-weight:lighter;
 }
 
+/* MENU LIST SECTION */
 .menu-container {
     display: flex;
     flex-direction: column;
@@ -86,6 +90,7 @@
     text-decoration: none;
 }
 
+/* BOTTOM SECTION */
 .bottom-container {
     display: flex;
     flex-direction: column;
@@ -103,4 +108,53 @@
 
 .setting {
     cursor: pointer;
+}
+
+/*************************** MIDDLE CONTAINER **************************/
+
+.middle-container {
+    background-color:#f1f6ea;
+    width: 60%;
+    padding: 15px;
+}
+
+.dashboard {
+    font-weight: lighter;
+    font-size: 25px;
+    margin-bottom: 10px;
+    letter-spacing: 2px; 
+}
+
+.upcoming-container {
+    background-color: #cbd8bf;
+    border-radius: 10px;
+    height: 50%;
+}
+
+.upcoming {
+    font-weight: lighter;
+    font-size: 20px;
+    padding-left: 10px;
+    padding-top: 10px;
+    letter-spacing: .5px;
+}
+
+.ul-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-left: 12px;
+    padding-right: 12px;
+    padding-top: 10px;
+}
+
+.upcoming-ul {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #faf8f6;
+    height: 40px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 8px;
 }

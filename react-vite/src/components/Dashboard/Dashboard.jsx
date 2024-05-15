@@ -68,17 +68,24 @@ function Dashboard() {
                     </div>
                 </div>
 
-                <div>
-                    <div>Dashboard</div>
-                    <div>
-                        <div>Upcoming</div>
-                        <ul>
+
+
+                <div className="middle-container">
+                    <div className="dashboard">Dashboard</div>
+                    <div className="upcoming-container">
+                        <div className="upcoming">Upcoming</div>
+                        <div className="ul-container">
                             {shifts.map(shift => (
-                                <ul key={shift.id}>{shift.shift_date}: {shift.shift_start} - {shift.shift_end}</ul>
+                                <div className='upcoming-ul' key={shift.id}>
+                                    <div> {shift.shift_date} </div>
+                                    <div> {shift.shift_start} - {shift.shift_end} </div>
+                                </div>
                             ))}
-                        </ul>
+                        </div>
                     </div>
                 </div>
+
+
 
                 <div>
                     <div>NOTICEBOARD</div>
