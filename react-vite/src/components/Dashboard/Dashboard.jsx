@@ -20,10 +20,6 @@ function Dashboard() {
         dispatch(fetchShifts())
     }, [dispatch])
 
-    const handleFetchShifts = async () => {
-        await dispatch(fetchShifts());
-    };
-
     const handleLogout = () => {
         dispatch(thunkLogout())
     }
