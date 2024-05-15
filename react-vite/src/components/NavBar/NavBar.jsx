@@ -1,5 +1,4 @@
 import { NavLink, useLocation, useParams } from "react-router-dom";
-import { useDispatch } from "react-redux";
 import logo from "../../../photos/logo.png"
 import "./NavBar.css"
 
