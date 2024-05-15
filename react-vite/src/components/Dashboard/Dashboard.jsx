@@ -37,7 +37,7 @@ function Dashboard() {
                         <div className="dashboard-menu">Menu</div>
                         <div className="search-container">
                             <input className='search-bar'type="search" placeholder="SEARCH"></input>
-                            <img className='search-icon'src={searchIcon} alt="search"></img>
+                            <img className='search-icon' src={searchIcon} onClick={() => alert('Feature coming soon!')} alt="search"></img>
                         </div>
                         <div className="name">{user.first_name} {user.last_name}</div>
                         <div className="menu-container">
@@ -87,12 +87,18 @@ function Dashboard() {
 
 
 
-                <div>
-                    <div>NOTICEBOARD</div>
-                    <ul>
-                        <li>MANDATORY TRAINING</li>
-                        <li>TEAM MEMBER SIGNATURE REMINDER</li>
-                    </ul>
+                <div className="right-container">
+                    <div className="noticeboard">NOTICEBOARD</div>
+                    <div className="noticeboard-container">
+                        <div className="noticeboard-container-inside">
+                            <img className='navlink-icon' src={scheduleIcon} alt="mandatory training"></img>
+                            <div onClick={() => alert('Feature coming soon!')}>mandatory training</div>
+                        </div>
+                        <div className="noticeboard-container-inside">
+                            <img className='navlink-icon' src={scheduleIcon} alt="mandatory training"></img>
+                            <div onClick={() => alert('Feature coming soon!')}>TEAM MEMBER SIGNATURE REMINDER</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
