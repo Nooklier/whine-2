@@ -9,6 +9,8 @@ import timeOffIcon from '../../../photos/time-off-icon.png'
 import ptoIcon from '../../../photos/pto-icon.png'
 import settingIcon from '../../../photos/setting-icon.png'
 import signOutIcon from '../../../photos/sign-out-icon.png'
+import './Shift.css'
+
 
 function Shifts() {
     const dispatch = useDispatch();
@@ -71,10 +73,15 @@ function Shifts() {
                     <div className="upcoming-container">
                         <div className="upcoming">This Week</div>
                         <div className="ul-container">
-                            {shifts.map(shift => (
-                                <div className='upcoming-ul' key={shift.id}>
-                                    <div> {shift.shift_date} </div>
-                                    <div> {shift.shift_start} - {shift.shift_end} </div>
+                            {Array.isArray(shifts) && shifts.map(shift => (
+                                <div key={shift.id}>
+                                <NavLink className='schedule' to={`/shift/${shift.id}`}>
+                                    <div>{shift.shift_date}</div>
+                                    <div className="schedule-inside">
+                                        <div>{shift.shift_start} - {shift.shift_end}</div>
+                                        <button>give away</button>
+                                    </div>
+                                </NavLink>
                                 </div>
                             ))}
                         </div>
@@ -99,25 +106,6 @@ function Shifts() {
             </div>
         </div>
 
-
-
-
-
-
-
-
-
-
-        // <div>
-        //     <h1>Shifts</h1>
-        //     {Array.isArray(shifts) && shifts.map(shift => (
-        //         <div key={shift.id}>
-        //             <NavLink to={`/shift/${shift.id}`}>
-        //                 <p>{shift.shift_date} : {shift.shift_start} - {shift.shift_end}</p>
-        //             </NavLink>
-        //         </div>
-        //     ))}
-        // </div>
     );
 }
 
