@@ -7,10 +7,12 @@ import {
 import thunk from "redux-thunk";
 import sessionReducer from "./session";
 import shiftsReducer from "./shift";
+import ptoReducer from "./pto/ptoReducers";
 
 const rootReducer = combineReducers({
   session: sessionReducer,
-  shifts: shiftsReducer
+  shifts: shiftsReducer,
+  pto: ptoReducer
 });
 
 let enhancer;

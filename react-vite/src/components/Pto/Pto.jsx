@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
-import { fetchShiftsByUserId } from "../../redux/shift";
+import { fetchPto } from "../../redux/pto/ptoThunks";
 import { thunkLogout } from "../../redux/session"
 import searchIcon from '../../../photos/search-icon.png'
 import scheduleIcon from '../../../photos/schedule-icon.png'
@@ -14,13 +14,27 @@ import './Pto.css'
 
 function Pto() {
     const dispatch = useDispatch();
-    const shifts = useSelector(state => state.shifts.shifts);
-    const userId = useSelector(state => state.session.user.id)
     const user = useSelector(state => state.session.user);
+    const loading = useSelector(state => state.pto.loading);
+    const error = useSelector(state => state.pto.error);
+    const ptoById = useSelector(state => state.pto.byId);
 
     useEffect(() => {
-        dispatch(fetchShiftsByUserId(userId));
-    }, [dispatch, userId]);
+        dispatch(fetchPto())
+    }, [dispatch])
+
+    if (loading) return <div>Loading...</div>
+    if (error) return <div>Error: {error}</div>
+
+    let totalHours = 0;
+    let usedPto = 0;
+
+    Object.values(ptoById).forEach(pto => {
+        totalHours += pto.total_hours;
+        usedPto += pto.used_hours;
+    })
+
+    let remainingHours = totalHours - usedPto
 
     const handleLogout = () => {
         dispatch(thunkLogout())
@@ -73,15 +87,15 @@ function Pto() {
                     <div className="pto-container">
                         <div className="pto-inside-container">
                             <div className="pto-title">Total PTO</div>
-                            <div className="pto">80 Hours</div>
+                            <div className="pto">{totalHours} Hours</div>
                         </div>
                         <div className="pto-inside-container">
                             <div className="pto-title">Used PTO</div>
-                            <div className="pto">40 Hours</div>
+                            <div className="pto">{usedPto} Hours</div>
                         </div>
                         <div className="pto-inside-container">
                             <div className="pto-title">Available PTO</div>
-                            <div className="pto">40 Hours</div>
+                            <div className="pto">{remainingHours} Hours</div>
                         </div>
                     </div>
                 </div>
