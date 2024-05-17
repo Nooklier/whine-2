@@ -5,6 +5,7 @@ import Homepage from '../components/Homepage/Homepage';
 import Dashboard from '../components/Dashboard/Dashboard';
 import Shifts from '../components/Shift/Shift';
 import ShiftDetails from '../components/Shift/ShiftDetails';
+import Pto from '../components/Pto/Pto';
 import Layout from './Layout';
 
 export const router = createBrowserRouter([
@@ -34,6 +35,10 @@ export const router = createBrowserRouter([
       {
         path: 'shift/:shiftId', 
         element: <ShiftDetails /> 
+      },
+      {
+        path: 'pto',
+        element: <Pto />
       }
     ],
   },

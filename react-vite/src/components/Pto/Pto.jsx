@@ -1,8 +1,7 @@
-import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { fetchShifts } from '../../redux/shift';  
-import "./Dashboard.css";
+import { useSelector, useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
+import { fetchShiftsByUserId } from "../../redux/shift";
 import { thunkLogout } from "../../redux/session"
 import searchIcon from '../../../photos/search-icon.png'
 import scheduleIcon from '../../../photos/schedule-icon.png'
@@ -10,15 +9,18 @@ import timeOffIcon from '../../../photos/time-off-icon.png'
 import ptoIcon from '../../../photos/pto-icon.png'
 import settingIcon from '../../../photos/setting-icon.png'
 import signOutIcon from '../../../photos/sign-out-icon.png'
+import './Pto.css'
 
-function Dashboard() {
-    const user = useSelector(state => state.session.user);
-    const shifts = useSelector(state => state.shifts.shifts)
+
+function Pto() {
     const dispatch = useDispatch();
+    const shifts = useSelector(state => state.shifts.shifts);
+    const userId = useSelector(state => state.session.user.id)
+    const user = useSelector(state => state.session.user);
 
     useEffect(() => {
-        dispatch(fetchShifts())
-    }, [dispatch])
+        dispatch(fetchShiftsByUserId(userId));
+    }, [dispatch, userId]);
 
     const handleLogout = () => {
         dispatch(thunkLogout())
@@ -45,7 +47,7 @@ function Dashboard() {
                                 <img className='navlink-icon' src={timeOffIcon} alt="time off request"></img>
                                 <NavLink className='nav-link' >TIME OFF REQUEST</NavLink>
                             </div>
-                            <div className="nav-link-container">
+                            <div className="nav-link-container-pto">
                                 <img className='navlink-icon' src={ptoIcon} alt="pto"></img>
                                 <NavLink className='nav-link' to='/pto'>PTO</NavLink>
                             </div>
@@ -67,16 +69,19 @@ function Dashboard() {
 
 
                 <div className="middle-container">
-                    <div className="dashboard">Dashboard</div>
-                    <div className="upcoming-container">
-                        <div className="upcoming">Upcoming</div>
-                        <div className="ul-container">
-                            {shifts.map(shift => (
-                                <div className='upcoming-ul' key={shift.id}>
-                                    <div> {shift.shift_date} </div>
-                                    <div> {shift.shift_start} - {shift.shift_end} </div>
-                                </div>
-                            ))}
+                    <div className="dashboard">Paid Time Off</div>
+                    <div className="pto-container">
+                        <div className="pto-inside-container">
+                            <div className="pto-title">Total PTO</div>
+                            <div className="pto">80 Hours</div>
+                        </div>
+                        <div className="pto-inside-container">
+                            <div className="pto-title">Used PTO</div>
+                            <div className="pto">40 Hours</div>
+                        </div>
+                        <div className="pto-inside-container">
+                            <div className="pto-title">Available PTO</div>
+                            <div className="pto">40 Hours</div>
                         </div>
                     </div>
                 </div>
@@ -98,7 +103,8 @@ function Dashboard() {
                 </div>
             </div>
         </div>
+
     );
 }
 
-export default Dashboard;
+export default Pto;

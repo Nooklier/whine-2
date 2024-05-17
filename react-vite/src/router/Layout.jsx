@@ -16,7 +16,6 @@ export default function Layout() {
   return (
     <div>
       <ModalProvider>
-        {/* <NavBar /> */}
         <Navigation />
         {isLoaded && <Outlet />}
         <Modal />

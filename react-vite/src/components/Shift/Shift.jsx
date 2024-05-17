@@ -39,7 +39,7 @@ function Shifts() {
                         </div>
                         <div className="name">{user.first_name} {user.last_name}</div>
                         <div className="menu-container">
-                            <div className="nav-link-container">
+                            <div className="nav-link-container-schedule">
                                 <img className='navlink-icon' src={scheduleIcon} alt="schedule"></img>
                                 <NavLink className='nav-link' to='/shift'>SCHEDULE</NavLink>
                             </div>
@@ -49,7 +49,7 @@ function Shifts() {
                             </div>
                             <div className="nav-link-container">
                                 <img className='navlink-icon' src={ptoIcon} alt="pto"></img>
-                                <NavLink className='nav-link' >PTO</NavLink>
+                                <NavLink className='nav-link' to='/pto'>PTO</NavLink>
                             </div>
                         </div>
                     </div>
