@@ -9,10 +9,10 @@ import timeOffIcon from '../../../photos/time-off-icon.png'
 import ptoIcon from '../../../photos/pto-icon.png'
 import settingIcon from '../../../photos/setting-icon.png'
 import signOutIcon from '../../../photos/sign-out-icon.png'
-import './Pto.css'
+import './TimeOff.css'
 
 
-function Pto() {
+function TimeOffRequest() {
     const dispatch = useDispatch();
     const user = useSelector(state => state.session.user);
     const loading = useSelector(state => state.pto.loading);
@@ -57,11 +57,11 @@ function Pto() {
                                 <img className='navlink-icon' src={scheduleIcon} alt="schedule"></img>
                                 <NavLink className='nav-link' to='/shift'>SCHEDULE</NavLink>
                             </div>
-                            <div className="nav-link-container">
+                            <div className="nav-link-container-timeoff">
                                 <img className='navlink-icon' src={timeOffIcon} alt="time off request"></img>
                                 <NavLink className='nav-link' to='/timeoff'>TIME OFF REQUEST</NavLink>
                             </div>
-                            <div className="nav-link-container-pto">
+                            <div className="nav-link-container">
                                 <img className='navlink-icon' src={ptoIcon} alt="pto"></img>
                                 <NavLink className='nav-link' to='/pto'>PTO</NavLink>
                             </div>
@@ -83,19 +83,13 @@ function Pto() {
 
 
                 <div className="middle-container">
-                    <div className="dashboard">Paid Time Off</div>
+                    <div className="header-container">
+                        <div className="header-title">Time Off Request</div>
+                        <button>CREATE</button>
+                    </div>
                     <div className="pto-container">
                         <div className="pto-inside-container">
-                            <div className="pto-title">Total PTO</div>
-                            <div className="pto">{totalHours} Hours</div>
-                        </div>
-                        <div className="pto-inside-container">
-                            <div className="pto-title">Used PTO</div>
-                            <div className="pto">{usedPto} Hours</div>
-                        </div>
-                        <div className="pto-inside-container">
-                            <div className="pto-title">Available PTO</div>
-                            <div className="pto">{remainingHours} Hours</div>
+                            <div className="pto-title">Status</div>
                         </div>
                     </div>
                 </div>
@@ -121,4 +115,4 @@ function Pto() {
     );
 }
 
-export default Pto;
+export default TimeOffRequest;

@@ -45,7 +45,7 @@ function Shifts() {
                             </div>
                             <div className="nav-link-container">
                                 <img className='navlink-icon' src={timeOffIcon} alt="time off request"></img>
-                                <NavLink className='nav-link' >TIME OFF REQUEST</NavLink>
+                                <NavLink className='nav-link' to='/timeoff'>TIME OFF REQUEST</NavLink>
                             </div>
                             <div className="nav-link-container">
                                 <img className='navlink-icon' src={ptoIcon} alt="pto"></img>

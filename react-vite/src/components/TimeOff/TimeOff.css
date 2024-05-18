@@ -1,0 +1,34 @@
+.nav-link-container-timeoff {
+    background-color: #faf8f6;
+    width: 93%;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    border-radius: 8px;
+    padding-left: 5px;
+    gap: 5px
+}
+
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-container button {
+    background-color: #cbd8bf;
+    border: none;
+    border-radius: 5px;
+    height: 30px;
+    width: 100px;
+    letter-spacing: 1px;
+    cursor: pointer;
+}
+
+.header-title {
+    font-weight: lighter;
+    font-size: 25px;
+    margin-bottom: 10px;
+    letter-spacing: 2px; 
+}
