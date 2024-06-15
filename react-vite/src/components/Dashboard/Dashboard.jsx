@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { fetchShifts } from '../../redux/shift';  
+import { fetchShifts, fetchAllShifts } from '../../redux/shift';  
 import "./Dashboard.css";
 import { NavLink } from "react-router-dom";
 import { thunkLogout } from "../../redux/session"
@@ -13,26 +13,43 @@ import signOutIcon from '../../../photos/sign-out-icon.png'
 
 function Dashboard() {
     const user = useSelector(state => state.session.user);
-    const shifts = useSelector(state => state.shifts.shifts)
+    const shifts = useSelector(state => state.shifts.shifts);
+    const allShifts = useSelector(state => state.shifts.allShifts);
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(fetchShifts())
-    }, [dispatch])
+        dispatch(fetchShifts());
+    }, [dispatch]);
 
     const handleLogout = () => {
-        dispatch(thunkLogout())
-    }
+        dispatch(thunkLogout());
+    };
+
+    const handleFetchAllShifts = () => {
+        dispatch(fetchAllShifts());
+    };
+
+    const getUpcomingText = () => {
+        return 'Upcoming';
+    };
+
+    const getNext7Shifts = (shifts) => {
+        // Sort shifts by date
+        const sortedShifts = shifts.sort((a, b) => new Date(a.shift_date) - new Date(b.shift_date));
+        // Get the next 7 shifts
+        return sortedShifts.slice(0, 7);
+    };
+
+    const next7Shifts = getNext7Shifts(shifts);
 
     return (
         <div className="dashboard-container">
             <div className="dashboard-inside-container">
-
                 <div className="dashboard-left-container">
                     <div>
                         <div className="dashboard-menu">Menu</div>
                         <div className="search-container">
-                            <input className='search-bar'type="search" placeholder="SEARCH"></input>
+                            <input className='search-bar' type="search" placeholder="SEARCH"></input>
                             <img className='search-icon' src={searchIcon} onClick={() => alert('Feature coming soon!')} alt="search"></img>
                         </div>
                         <div className="name">{user.first_name} {user.last_name}</div>
@@ -54,34 +71,44 @@ function Dashboard() {
 
                     <div className="bottom-container">
                         <div className="left-bottom-container">
-                            <img className='navlink-icon' src={settingIcon}></img>
+                            <img className='navlink-icon' src={settingIcon} alt="settings"></img>
                             <div className='setting' onClick={() => alert('Feature coming soon!')}>SETTINGS</div>
                         </div>
                         <div className="left-bottom-container">
-                            <img className='navlink-icon' src={signOutIcon}></img>
-                            <NavLink style={{textDecoration: 'none'}} onClick={handleLogout} to='/'>SIGN OUT</NavLink>
+                            <img className='navlink-icon' src={signOutIcon} alt="sign out"></img>
+                            <NavLink style={{ textDecoration: 'none' }} onClick={handleLogout} to='/'>SIGN OUT</NavLink>
                         </div>
                     </div>
                 </div>
 
-
-
                 <div className="middle-container">
                     <div className="dashboard">Dashboard</div>
                     <div className="upcoming-container">
-                        <div className="upcoming">Upcoming</div>
+                        <div className="upcoming">{getUpcomingText()}</div>
                         <div className="ul-container">
-                            {shifts.map(shift => (
+                            {next7Shifts.map(shift => (
                                 <div className='upcoming-ul' key={shift.id}>
                                     <div> {shift.shift_date} </div>
                                     <div> {shift.shift_start} - {shift.shift_end} </div>
                                 </div>
                             ))}
                         </div>
+                        <button onClick={handleFetchAllShifts}>Fetch All Shifts</button>
+                        {allShifts.length > 0 && (
+                            <div className="all-shifts-container">
+                                <div className="all-shifts">All Shifts</div>
+                                <div className="ul-container">
+                                    {allShifts.map(shift => (
+                                        <div className='upcoming-ul' key={shift.id}>
+                                            <div> {shift.shift_date} </div>
+                                            <div> {shift.shift_start} - {shift.shift_end} </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
                     </div>
                 </div>
-
-
 
                 <div className="right-container">
                     <div className="noticeboard">NOTICEBOARD</div>
@@ -91,7 +118,7 @@ function Dashboard() {
                             <div onClick={() => alert('Feature coming soon!')}>mandatory training</div>
                         </div>
                         <div className="noticeboard-container-inside">
-                            <img className='navlink-icon' src={scheduleIcon} alt="mandatory training"></img>
+                            <img className='navlink-icon' src={scheduleIcon} alt="team member signature reminder"></img>
                             <div onClick={() => alert('Feature coming soon!')}>TEAM MEMBER SIGNATURE REMINDER</div>
                         </div>
                     </div>
