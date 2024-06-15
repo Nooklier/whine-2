@@ -1,15 +1,15 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { fetchShifts, fetchAllShifts } from '../../redux/shift';  
+import { fetchShiftsByUserId, fetchAllShifts } from '../../redux/shift';  
 import "./Dashboard.css";
 import { NavLink } from "react-router-dom";
-import { thunkLogout } from "../../redux/session"
-import searchIcon from '../../../photos/search-icon.png'
-import scheduleIcon from '../../../photos/schedule-icon.png'
-import timeOffIcon from '../../../photos/time-off-icon.png'
-import ptoIcon from '../../../photos/pto-icon.png'
-import settingIcon from '../../../photos/setting-icon.png'
-import signOutIcon from '../../../photos/sign-out-icon.png'
+import { thunkLogout } from "../../redux/session";
+import searchIcon from '../../../photos/search-icon.png';
+import scheduleIcon from '../../../photos/schedule-icon.png';
+import timeOffIcon from '../../../photos/time-off-icon.png';
+import ptoIcon from '../../../photos/pto-icon.png';
+import settingIcon from '../../../photos/setting-icon.png';
+import signOutIcon from '../../../photos/sign-out-icon.png';
 
 function Dashboard() {
     const user = useSelector(state => state.session.user);
@@ -18,7 +18,7 @@ function Dashboard() {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(fetchShifts());
+        dispatch(fetchShiftsByUserId());
     }, [dispatch]);
 
     const handleLogout = () => {
@@ -29,13 +29,12 @@ function Dashboard() {
         dispatch(fetchAllShifts());
     };
 
-    const getUpcomingText = () => {
-        return 'Upcoming';
-    };
-
     const getNext7Shifts = (shifts) => {
-        // Sort shifts by date
-        const sortedShifts = shifts.sort((a, b) => new Date(a.shift_date) - new Date(b.shift_date));
+        const today = new Date();
+        // Filter and sort shifts by date
+        const sortedShifts = shifts
+            .filter(shift => new Date(shift.shift_date) >= today)
+            .sort((a, b) => new Date(a.shift_date) - new Date(b.shift_date));
         // Get the next 7 shifts
         return sortedShifts.slice(0, 7);
     };
@@ -84,7 +83,7 @@ function Dashboard() {
                 <div className="middle-container">
                     <div className="dashboard">Dashboard</div>
                     <div className="upcoming-container">
-                        <div className="upcoming">{getUpcomingText()}</div>
+                        <div className="upcoming">Upcoming</div>
                         <div className="ul-container">
                             {next7Shifts.map(shift => (
                                 <div className='upcoming-ul' key={shift.id}>

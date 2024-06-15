@@ -17,7 +17,6 @@ function TimeOffRequest() {
     const user = useSelector(state => state.session.user);
     const loading = useSelector(state => state.pto.loading);
     const error = useSelector(state => state.pto.error);
-    const ptoById = useSelector(state => state.pto.byId);
 
     useEffect(() => {
         dispatch(fetchPto())
@@ -25,16 +24,6 @@ function TimeOffRequest() {
 
     if (loading) return <div>Loading...</div>
     if (error) return <div>Error: {error}</div>
-
-    let totalHours = 0;
-    let usedPto = 0;
-
-    Object.values(ptoById).forEach(pto => {
-        totalHours += pto.total_hours;
-        usedPto += pto.used_hours;
-    })
-
-    let remainingHours = totalHours - usedPto
 
     const handleLogout = () => {
         dispatch(thunkLogout())
