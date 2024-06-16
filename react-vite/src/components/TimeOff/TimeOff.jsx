@@ -1,33 +1,78 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { fetchPto } from "../../redux/pto/ptoThunks";
-import { thunkLogout } from "../../redux/session"
-import searchIcon from '../../../photos/search-icon.png'
-import scheduleIcon from '../../../photos/schedule-icon.png'
-import timeOffIcon from '../../../photos/time-off-icon.png'
-import ptoIcon from '../../../photos/pto-icon.png'
-import settingIcon from '../../../photos/setting-icon.png'
-import signOutIcon from '../../../photos/sign-out-icon.png'
-import './TimeOff.css'
-
+import { thunkLogout } from "../../redux/session";
+import { createTimeOffRequest, fetchTimeOffRequests, deleteTimeOffRequest } from "../../redux/timeOff/timeOffThunks"; 
+import searchIcon from '../../../photos/search-icon.png';
+import scheduleIcon from '../../../photos/schedule-icon.png';
+import timeOffIcon from '../../../photos/time-off-icon.png';
+import ptoIcon from '../../../photos/pto-icon.png';
+import settingIcon from '../../../photos/setting-icon.png';
+import signOutIcon from '../../../photos/sign-out-icon.png';
+import './TimeOff.css';
 
 function TimeOffRequest() {
     const dispatch = useDispatch();
     const user = useSelector(state => state.session.user);
-    const loading = useSelector(state => state.pto.loading);
-    const error = useSelector(state => state.pto.error);
+    const navigate = useNavigate();
+    const loading = useSelector(state => state.timeOff.loading);
+    const error = useSelector(state => state.timeOff.error);
+    const timeOffRequestsFromState = useSelector(state => state.timeOff.requests || []);
+    
+    const [formData, setFormData] = useState({
+        start_date: '',
+        end_date: '',
+        pto_use: 0
+    });
+
+    const [timeOffRequests, setTimeOffRequests] = useState(timeOffRequestsFromState);
 
     useEffect(() => {
-        dispatch(fetchPto())
-    }, [dispatch])
+        dispatch(fetchPto());
+        dispatch(fetchTimeOffRequests());
+    }, [dispatch]);
 
-    if (loading) return <div>Loading...</div>
-    if (error) return <div>Error: {error}</div>
+    useEffect(() => {
+        setTimeOffRequests(timeOffRequestsFromState);
+    }, [timeOffRequestsFromState]);
+
+    if (loading) return <div>Loading...</div>;
+    if (error) return <div>Error: {error}</div>;
 
     const handleLogout = () => {
-        dispatch(thunkLogout())
-    }
+        dispatch(thunkLogout());
+    };
+
+    const handleCreateTimeOff = () => {
+        dispatch(createTimeOffRequest(formData)).then(response => {
+            if (response.type === 'CREATE_TIME_OFF_REQUEST_SUCCESS') {
+                setTimeOffRequests([...timeOffRequests, response.payload]);
+            }
+        });
+    };
+
+    const handleDeleteTimeOffRequest = (id) => {
+        dispatch(deleteTimeOffRequest(id)).then(response => {
+            if (response.type === 'DELETE_TIME_OFF_REQUEST_SUCCESS') {
+                setTimeOffRequests(timeOffRequests.filter(request => request.id !== id));
+            }
+        });
+    };
+
+    const handleEdit = (id) => {
+        navigate(`/timeoff/edit/${id}`); 
+    };    
+
+    const timeOffRequestsList = timeOffRequests.map((request) => (
+        <div key={request.id} className="time-off-request">
+            <div>Start Date: {request.start_date}</div>
+            <div>End Date: {request.end_date}</div>
+            <div>PTO Use: {request.pto_use}</div>
+            <button onClick={() => handleDeleteTimeOffRequest(request.id)}>Delete</button>
+            <button onClick={() => handleEdit(request.id)}>Edit</button>
+        </div>
+    ));
 
     return (
         <div className="dashboard-container">
@@ -69,21 +114,42 @@ function TimeOffRequest() {
                     </div>
                 </div>
 
-
-
                 <div className="middle-container">
                     <div className="header-container">
                         <div className="header-title">Time Off Request</div>
-                        <button>CREATE</button>
                     </div>
                     <div className="pto-container">
                         <div className="pto-inside-container">
-                            <div className="pto-title">Status</div>
+                            <div className="pto-title">Create Time Off Request</div>
+                            <div>Start Date</div>
+                            <input
+                                type="date"
+                                name="start_date"
+                                value={formData.start_date}
+                                onChange={(e) => setFormData({ ...formData, start_date: e.target.value })}
+                            />
+                            <div>End Date</div>
+                            <input
+                                type="date"
+                                name="end_date"
+                                value={formData.end_date}
+                                onChange={(e) => setFormData({ ...formData, end_date: e.target.value })}
+                            />
+                            <div>PTO Request</div>
+                            <input
+                                type="number"
+                                name="pto_use"
+                                value={formData.pto_use}
+                                onChange={(e) => setFormData({ ...formData, pto_use: parseInt(e.target.value, 10) })}
+                            />
+                            <button onClick={handleCreateTimeOff}>CREATE</button>
                         </div>
                     </div>
+                    <div className="time-off-requests">
+                        <div className="time-off-title">My Time Off Requests</div>
+                        {timeOffRequests.length > 0 ? timeOffRequestsList : <div>No time off requests available.</div>}
+                    </div>
                 </div>
-
-
 
                 <div className="right-container">
                     <div className="noticeboard">NOTICEBOARD</div>
@@ -100,7 +166,6 @@ function TimeOffRequest() {
                 </div>
             </div>
         </div>
-
     );
 }
 

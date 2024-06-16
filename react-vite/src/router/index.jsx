@@ -6,6 +6,7 @@ import Dashboard from '../components/Dashboard/Dashboard';
 import Shifts from '../components/Shift/Shift';
 import Pto from '../components/Pto/Pto';
 import TimeOffRequest from '../components/TimeOff/TimeOff';
+import EditTimeOffRequest from '../components/TimeOff/TimeOffRequest';
 import Layout from './Layout';
 
 export const router = createBrowserRouter([
@@ -39,6 +40,10 @@ export const router = createBrowserRouter([
       {
         path: 'timeoff',
         element: <TimeOffRequest />
+      },
+      {
+        path: 'timeoff/edit/:id',
+        element: <EditTimeOffRequest />
       }
     ],
   },

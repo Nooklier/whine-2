@@ -31,11 +31,11 @@ function Dashboard() {
 
     const getNext7Shifts = (shifts) => {
         const today = new Date();
-        // Filter and sort shifts by date
+        
         const sortedShifts = shifts
             .filter(shift => new Date(shift.shift_date) >= today)
             .sort((a, b) => new Date(a.shift_date) - new Date(b.shift_date));
-        // Get the next 7 shifts
+        
         return sortedShifts.slice(0, 7);
     };
 

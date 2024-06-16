@@ -2,20 +2,19 @@ import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { fetchShiftsByUserId } from "../../redux/shift";
-import { thunkLogout } from "../../redux/session"
-import searchIcon from '../../../photos/search-icon.png'
-import scheduleIcon from '../../../photos/schedule-icon.png'
-import timeOffIcon from '../../../photos/time-off-icon.png'
-import ptoIcon from '../../../photos/pto-icon.png'
-import settingIcon from '../../../photos/setting-icon.png'
-import signOutIcon from '../../../photos/sign-out-icon.png'
-import './Shift.css'
-
+import { thunkLogout } from "../../redux/session";
+import searchIcon from '../../../photos/search-icon.png';
+import scheduleIcon from '../../../photos/schedule-icon.png';
+import timeOffIcon from '../../../photos/time-off-icon.png';
+import ptoIcon from '../../../photos/pto-icon.png';
+import settingIcon from '../../../photos/setting-icon.png';
+import signOutIcon from '../../../photos/sign-out-icon.png';
+import './Shift.css';
 
 function Shifts() {
     const dispatch = useDispatch();
     const shifts = useSelector(state => state.shifts.shifts);
-    const userId = useSelector(state => state.session.user.id)
+    const userId = useSelector(state => state.session.user.id);
     const user = useSelector(state => state.session.user);
 
     useEffect(() => {
@@ -23,18 +22,21 @@ function Shifts() {
     }, [dispatch, userId]);
 
     const handleLogout = () => {
-        dispatch(thunkLogout())
-    }
+        dispatch(thunkLogout());
+    };
+
+    const sortedShifts = Array.isArray(shifts)
+        ? shifts.sort((a, b) => new Date(a.shift_date) - new Date(b.shift_date)).slice(0, 10)
+        : [];
 
     return (
         <div className="dashboard-container">
             <div className="dashboard-inside-container">
-
                 <div className="dashboard-left-container">
                     <div>
                         <div className="dashboard-menu">Menu</div>
                         <div className="search-container">
-                            <input className='search-bar'type="search" placeholder="SEARCH"></input>
+                            <input className='search-bar' type="search" placeholder="SEARCH"></input>
                             <img className='search-icon' src={searchIcon} onClick={() => alert('Feature coming soon!')} alt="search"></img>
                         </div>
                         <div className="name">{user.first_name} {user.last_name}</div>
@@ -56,39 +58,35 @@ function Shifts() {
 
                     <div className="bottom-container">
                         <div className="left-bottom-container">
-                            <img className='navlink-icon' src={settingIcon}></img>
+                            <img className='navlink-icon' src={settingIcon} alt="settings"></img>
                             <div className='setting' onClick={() => alert('Feature coming soon!')}>SETTINGS</div>
                         </div>
                         <div className="left-bottom-container">
-                            <img className='navlink-icon' src={signOutIcon}></img>
+                            <img className='navlink-icon' src={signOutIcon} alt="sign out"></img>
                             <NavLink style={{textDecoration: 'none'}} onClick={handleLogout} to='/'>SIGN OUT</NavLink>
                         </div>
                     </div>
                 </div>
 
-
-
                 <div className="middle-container">
                     <div className="dashboard">Schedule</div>
                     <div className="upcoming-container">
-                        <div className="upcoming">This Week</div>
+                        <div className="upcoming">All Shifts</div>
                         <div className="ul-container">
-                            {Array.isArray(shifts) && shifts.map(shift => (
+                            {sortedShifts.map(shift => (
                                 <div key={shift.id}>
-                                <NavLink className='schedule' to={`/shift/${shift.id}`}>
-                                    <div>{shift.shift_date}</div>
-                                    <div className="schedule-inside">
-                                        <div>{shift.shift_start} - {shift.shift_end}</div>
-                                        <button>give away</button>
-                                    </div>
-                                </NavLink>
+                                    <NavLink className='schedule' to={`/shift/${shift.id}`}>
+                                        <div>{shift.shift_date}</div>
+                                        <div className="schedule-inside">
+                                            <div>{shift.shift_start} - {shift.shift_end}</div>
+                                            <button>give away</button>
+                                        </div>
+                                    </NavLink>
                                 </div>
                             ))}
                         </div>
                     </div>
                 </div>
-
-
 
                 <div className="right-container">
                     <div className="noticeboard">NOTICEBOARD</div>
@@ -105,7 +103,6 @@ function Shifts() {
                 </div>
             </div>
         </div>
-
     );
 }
 

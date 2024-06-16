@@ -4,6 +4,7 @@ const UPDATE_SHIFT = 'shifts/updateShift';
 const GET_SHIFT_BY_ID = 'shifts/getShiftById';
 const GET_SHIFTS_BY_USER_ID = 'shifts/getShiftsByUserId';
 const GET_ALL_SHIFTS = 'shifts/getAllShifts';
+const UPDATE_SHIFT_AVAILABILITY = 'shifts/updateShiftAvailability';
 
 /********************* ACTION CREATORS *********************/
 
@@ -25,6 +26,11 @@ const getShiftsByUserId = (shifts) => ({
 const getAllShifts = (shifts) => ({
   type: GET_ALL_SHIFTS,
   payload: shifts
+});
+
+const updateShiftAvailability = (shiftId, available) => ({
+  type: UPDATE_SHIFT_AVAILABILITY,
+  payload: { shiftId, available }
 });
 
 /********************* THUNK ACTION CREATORS *********************/
@@ -49,6 +55,26 @@ export const updateShiftInfo = (shiftId, updatedInfo) => async (dispatch) => {
     console.error("Error updating shift:", error);
   }
 }
+
+export const updateShiftAvailabilityThunk = (shiftId, available) => async (dispatch) => {
+  try {
+    const response = await fetch(`/api/shift/update/${shiftId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ available })
+    });
+
+    if (response.ok) {
+      dispatch(updateShiftAvailability(shiftId, available));
+    } else {
+      console.error('Failed to update shift availability: HTTP status', response.status);
+    }
+  } catch (error) {
+    console.error('Error updating shift availability:', error);
+  }
+};
 
 export const fetchShiftById = (shiftId) => async (dispatch) => {
   try {
@@ -108,6 +134,11 @@ function shiftsReducer(state = initialState, action) {
     case UPDATE_SHIFT:
       updatedShifts = state.shifts.map(shift =>
         shift.id === action.payload.id ? action.payload : shift
+      );
+      return { ...state, shifts: updatedShifts };
+    case UPDATE_SHIFT_AVAILABILITY:
+      updatedShifts = state.shifts.map(shift =>
+        shift.id === action.payload.shiftId ? { ...shift, available: action.payload.available } : shift
       );
       return { ...state, shifts: updatedShifts };
     case GET_SHIFT_BY_ID:

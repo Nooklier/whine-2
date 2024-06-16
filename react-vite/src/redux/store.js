@@ -8,11 +8,13 @@ import thunk from "redux-thunk";
 import sessionReducer from "./session";
 import shiftsReducer from "./shift";
 import ptoReducer from "./pto/ptoReducers";
+import timeOffReducer from "./timeOff/timeOffReducers";
 
 const rootReducer = combineReducers({
   session: sessionReducer,
   shifts: shiftsReducer,
-  pto: ptoReducer
+  pto: ptoReducer,
+  timeOff: timeOffReducer
 });
 
 let enhancer;
