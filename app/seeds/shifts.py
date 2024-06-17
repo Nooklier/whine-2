@@ -28,32 +28,32 @@ def seed_shifts():
         Shift(user_id=1, shift_date=generate_random_date(start_date, end_date), shift_start=time(9, 0), shift_end=time(17, 0), available=False),
 
         # Employee 2
-        Shift(user_id=2, shift_date=generate_random_date(start_date, end_date), shift_start=time(8, 0), shift_end=time(16, 0), available=False),
-        Shift(user_id=2, shift_date=generate_random_date(start_date, end_date), shift_start=time(9, 0), shift_end=time(17, 0), available=False),
-        Shift(user_id=2, shift_date=generate_random_date(start_date, end_date), shift_start=time(10, 0), shift_end=time(18, 0), available=False),
-        Shift(user_id=2, shift_date=generate_random_date(start_date, end_date), shift_start=time(8, 0), shift_end=time(16, 0), available=False),
-        Shift(user_id=2, shift_date=generate_random_date(start_date, end_date), shift_start=time(9, 0), shift_end=time(17, 0), available=False),
-        Shift(user_id=2, shift_date=generate_random_date(start_date, end_date), shift_start=time(8, 0), shift_end=time(16, 0), available=False),
-        Shift(user_id=2, shift_date=generate_random_date(start_date, end_date), shift_start=time(9, 0), shift_end=time(17, 0), available=False),
-        Shift(user_id=2, shift_date=generate_random_date(start_date, end_date), shift_start=time(10, 0), shift_end=time(18, 0), available=False),
-        Shift(user_id=2, shift_date=generate_random_date(start_date, end_date), shift_start=time(8, 0), shift_end=time(16, 0), available=False),
-        Shift(user_id=2, shift_date=generate_random_date(start_date, end_date), shift_start=time(9, 0), shift_end=time(17, 0), available=False),
+        # Shift(user_id=2, shift_date=generate_random_date(start_date, end_date), shift_start=time(8, 0), shift_end=time(16, 0), available=False),
+        # Shift(user_id=2, shift_date=generate_random_date(start_date, end_date), shift_start=time(9, 0), shift_end=time(17, 0), available=False),
+        # Shift(user_id=2, shift_date=generate_random_date(start_date, end_date), shift_start=time(10, 0), shift_end=time(18, 0), available=False),
+        # Shift(user_id=2, shift_date=generate_random_date(start_date, end_date), shift_start=time(8, 0), shift_end=time(16, 0), available=False),
+        # Shift(user_id=2, shift_date=generate_random_date(start_date, end_date), shift_start=time(9, 0), shift_end=time(17, 0), available=False),
+        # Shift(user_id=2, shift_date=generate_random_date(start_date, end_date), shift_start=time(8, 0), shift_end=time(16, 0), available=False),
+        # Shift(user_id=2, shift_date=generate_random_date(start_date, end_date), shift_start=time(9, 0), shift_end=time(17, 0), available=False),
+        # Shift(user_id=2, shift_date=generate_random_date(start_date, end_date), shift_start=time(10, 0), shift_end=time(18, 0), available=False),
+        # Shift(user_id=2, shift_date=generate_random_date(start_date, end_date), shift_start=time(8, 0), shift_end=time(16, 0), available=False),
+        # Shift(user_id=2, shift_date=generate_random_date(start_date, end_date), shift_start=time(9, 0), shift_end=time(17, 0), available=False),
 
         # Employee 3
-        Shift(user_id=3, shift_date=generate_random_date(start_date, end_date), shift_start=time(8, 0), shift_end=time(16, 0), available=False),
-        Shift(user_id=3, shift_date=generate_random_date(start_date, end_date), shift_start=time(9, 0), shift_end=time(17, 0), available=False),
-        Shift(user_id=3, shift_date=generate_random_date(start_date, end_date), shift_start=time(10, 0), shift_end=time(18, 0), available=False),
-        Shift(user_id=3, shift_date=generate_random_date(start_date, end_date), shift_start=time(8, 0), shift_end=time(16, 0), available=False),
-        Shift(user_id=3, shift_date=generate_random_date(start_date, end_date), shift_start=time(9, 0), shift_end=time(17, 0), available=False),
-        Shift(user_id=3, shift_date=generate_random_date(start_date, end_date), shift_start=time(8, 0), shift_end=time(16, 0), available=False),
-        Shift(user_id=3, shift_date=generate_random_date(start_date, end_date), shift_start=time(9, 0), shift_end=time(17, 0), available=False),
-        Shift(user_id=3, shift_date=generate_random_date(start_date, end_date), shift_start=time(10, 0), shift_end=time(18, 0), available=False),
-        Shift(user_id=3, shift_date=generate_random_date(start_date, end_date), shift_start=time(8, 0), shift_end=time(16, 0), available=False),
-        Shift(user_id=3, shift_date=generate_random_date(start_date, end_date), shift_start=time(9, 0), shift_end=time(17, 0), available=False),
+        # Shift(user_id=3, shift_date=generate_random_date(start_date, end_date), shift_start=time(8, 0), shift_end=time(16, 0), available=False),
+        # Shift(user_id=3, shift_date=generate_random_date(start_date, end_date), shift_start=time(9, 0), shift_end=time(17, 0), available=False),
+        # Shift(user_id=3, shift_date=generate_random_date(start_date, end_date), shift_start=time(10, 0), shift_end=time(18, 0), available=False),
+        # Shift(user_id=3, shift_date=generate_random_date(start_date, end_date), shift_start=time(8, 0), shift_end=time(16, 0), available=False),
+        # Shift(user_id=3, shift_date=generate_random_date(start_date, end_date), shift_start=time(9, 0), shift_end=time(17, 0), available=False),
+        # Shift(user_id=3, shift_date=generate_random_date(start_date, end_date), shift_start=time(8, 0), shift_end=time(16, 0), available=False),
+        # Shift(user_id=3, shift_date=generate_random_date(start_date, end_date), shift_start=time(9, 0), shift_end=time(17, 0), available=False),
+        # Shift(user_id=3, shift_date=generate_random_date(start_date, end_date), shift_start=time(10, 0), shift_end=time(18, 0), available=False),
+        # Shift(user_id=3, shift_date=generate_random_date(start_date, end_date), shift_start=time(8, 0), shift_end=time(16, 0), available=False),
+        # Shift(user_id=3, shift_date=generate_random_date(start_date, end_date), shift_start=time(9, 0), shift_end=time(17, 0), available=False),
 
     ]
 
-    db.session.add_all(shift_seed_data)
+    # db.session.add_all(shift_seed_data)
     db.session.commit()
 
 def undo_shifts():
