@@ -26,6 +26,9 @@ def upgrade():
     sa.Column('pto_use', sa.Integer()),
     sa.PrimaryKeyConstraint('id')
     )
+
+    if environment == "production":
+        op.execute(f"ALTER TABLE users SET SCHEMA {SCHEMA};")
     # ### end Alembic commands ###
 
 
