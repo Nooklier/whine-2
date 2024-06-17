@@ -8,3 +8,19 @@
    height: 40px;
    cursor: pointer;
 }
+
+.error-messages {
+   display: flex;
+   flex-wrap: wrap;
+   gap: 10px;
+   margin-top: 10px;
+   padding: 10px;
+   border: 1px solid red;
+   background-color: #ffe6e6;
+}
+
+.error {
+   color: red;
+   margin: 0;
+   padding: 0;
+}

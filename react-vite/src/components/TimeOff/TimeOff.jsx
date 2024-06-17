@@ -66,11 +66,11 @@ function TimeOffRequest() {
 
     const timeOffRequestsList = timeOffRequests.map((request) => (
         <div key={request.id} className="time-off-request">
-            <div>Start Date: {request.start_date}</div>
-            <div>End Date: {request.end_date}</div>
-            <div>PTO Use: {request.pto_use}</div>
-            <button onClick={() => handleDeleteTimeOffRequest(request.id)}>Delete</button>
-            <button onClick={() => handleEdit(request.id)}>Edit</button>
+            <div className="time-off-request-date">Start Date: {request.start_date}</div>
+            <div className="time-off-request-date">End Date: {request.end_date}</div>
+            <div className="time-off-request-pto">PTO Use: {request.pto_use}</div>
+            <button className="time-off-request-button" onClick={() => handleDeleteTimeOffRequest(request.id)}>Delete</button>
+            <button className="time-off-request-button" onClick={() => handleEdit(request.id)}>Edit</button>
         </div>
     ));
 
@@ -99,7 +99,7 @@ function TimeOffRequest() {
                                 <img className='navlink-icon' src={ptoIcon} alt="pto"></img>
                                 <NavLink className='nav-link' to='/pto'>PTO</NavLink>
                             </div>
-                            {user.role === 'Manager' && (
+                            {user.role === 'manager' && (
                                 <div className="nav-link-container">
                                     <img className='navlink-icon' src={scheduleIcon} alt="all shifts"></img>
                                     <NavLink className='nav-link' to='/allshifts'>ALL SHIFTS</NavLink>
@@ -151,9 +151,9 @@ function TimeOffRequest() {
                             <button onClick={handleCreateTimeOff}>CREATE</button>
                         </div>
                     </div>
-                    <div className="time-off-requests">
+                    <div className="upcoming-container-timeoff">
                         <div className="time-off-title">My Time Off Requests</div>
-                        {timeOffRequests.length > 0 ? timeOffRequestsList : <div>No time off requests available.</div>}
+                        <div className="timeoff-list">{timeOffRequestsList}</div>
                     </div>
                 </div>
 

@@ -17,7 +17,7 @@ function LoginFormPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(username, password)
+    console.log(username, password);
 
     const serverResponse = await dispatch(
       thunkLogin({
@@ -33,12 +33,16 @@ function LoginFormPage() {
     }
   };
   
-  const handleDemoUser = () => {
+  const handleManagerUser = () => {
     setUsername("janesmith");
     setPassword("password2");
   };
 
-  
+  const handleEmployeeUser = () => {
+    setUsername("johndoe");
+    setPassword("password1");
+  };
+
   return (
     <div className="login-container">
       <NavLink to='/' className="login-left">
@@ -71,7 +75,6 @@ function LoginFormPage() {
             </label>
           </div>
 
-
           <div>
             {errors.length > 0 && errors.map((message) => <p key={message}>{message}</p>)}
             {errors.username && <p>{errors.username}</p>}
@@ -79,7 +82,8 @@ function LoginFormPage() {
           </div>
 
           <div className="buttons-container">
-            <button className='demo-user-button' type="button" onClick={handleDemoUser}>Demo User</button>
+            <button className='demo-user-button' type="button" onClick={handleManagerUser}>Manager User</button>
+            <button className='demo-user-button' type="button" onClick={handleEmployeeUser}>Employee User</button>
             <button className='login-button' type="submit">Log In</button>
           </div>
 

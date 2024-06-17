@@ -32,3 +32,24 @@
     margin-bottom: 10px;
     letter-spacing: 2px; 
 }
+
+.upcoming-container-timeoff {
+    background-color: #cbd8bf;
+    border-radius: 10px;
+    height: 200px;
+    margin-top: 30px;
+    padding: 10px;
+}
+
+.time-off-title {
+    font-weight: lighter;
+    font-size: 20px;
+    letter-spacing: .5px;
+}
+
+.timeoff-list {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+    gap: 10px;
+}

@@ -1,0 +1,7 @@
+.upcoming-container-timeoff {
+    max-height: 800px; 
+    overflow-y: auto; 
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+}

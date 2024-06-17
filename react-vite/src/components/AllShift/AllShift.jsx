@@ -54,7 +54,7 @@ function AllShifts() {
                         </div>
                         <div className="name">{user.first_name} {user.last_name}</div>
                         <div className="menu-container">
-                            <div className="nav-link-container-schedule">
+                            <div className="nav-link-container">
                                 <img className='navlink-icon' src={scheduleIcon} alt="schedule"></img>
                                 <NavLink className='nav-link' to='/shift'>SCHEDULE</NavLink>
                             </div>
@@ -66,7 +66,7 @@ function AllShifts() {
                                 <img className='navlink-icon' src={ptoIcon} alt="pto"></img>
                                 <NavLink className='nav-link' to='/pto'>PTO</NavLink>
                             </div>
-                            <div className="nav-link-container">
+                            <div className="nav-link-container-schedule">
                                 <img className='navlink-icon' src={scheduleIcon} alt="all shifts"></img>
                                 <NavLink className='nav-link' to='/allshifts'>ALL SHIFTS</NavLink>
                             </div>
@@ -87,9 +87,8 @@ function AllShifts() {
 
                 <div className="middle-container">
                     <div className="dashboard">All Shifts</div>
-                    <div className="upcoming-container">
-                        <div className="upcoming">All Shifts</div>
-                        <button onClick={handleCreateShift}>Create New Shift</button>
+                    <button onClick={handleCreateShift}>Create New Shift</button>
+                    <div className="upcoming-container-timeoff">
                         <div className="ul-container">
                             {Array.isArray(sortedShifts) && sortedShifts.length > 0 ? (
                                 sortedShifts.map(shift => (
