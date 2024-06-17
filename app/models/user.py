@@ -20,7 +20,7 @@ class User(db.Model, UserMixin):
     last_name = db.Column(db.String(40), nullable=False)
     username = db.Column(db.String(40), nullable=False, unique=True)
     hashed_password = db.Column(db.String(255), nullable=False)
-    role = db.Column(db.Enum(UserRole, name="user_role"), nullable=False)
+    role = db.Column(db.Enum(UserRole), nullable=False)
 
     # Relationships
     shifts = db.relationship('Shift', backref='user', lazy=True, cascade="all, delete-orphan")  
