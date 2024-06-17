@@ -43,8 +43,8 @@ def seed_time_off_requests():
 
 def undo_time_off_requests():
     if environment == "production":
-        db.session.execute(f"TRUNCATE table {SCHEMA}.time_off_request RESTART IDENTITY CASCADE;")
+        db.session.execute(f"TRUNCATE table {SCHEMA}.time_off_requests RESTART IDENTITY CASCADE;")
     else:
-        db.session.execute(text("DELETE FROM time_off_request"))
+        db.session.execute(text("DELETE FROM time_off_requests"))
         
     db.session.commit()
