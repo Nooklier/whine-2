@@ -3,8 +3,9 @@ from sqlalchemy.sql import text
 
 def seed_users():
 
-    users_seed_data = [
-        demo = User(first_name="John", last_name="Doe", username="johndoe", password="password1", role=UserRole.Employee)
+    # users_seed_data = 
+        john = User(
+            first_name="John", last_name="Doe", username="johndoe", password="password1", role=UserRole.Employee)
 
         # User(
         #     first_name="John",
@@ -41,7 +42,7 @@ def seed_users():
         #     password="password5",  
         #     role=UserRole.Employee
         # )
-    ]
+    
 
     # db.session.add_all(users_seed_data)
     db.session.commit()
