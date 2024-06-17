@@ -4,8 +4,8 @@ from sqlalchemy.sql import text
 def seed_users():
 
     # users_seed_data = 
-        john = User(
-            first_name="John", last_name="Doe", username="johndoe", password="password1", role=UserRole.Employee)
+    john = User(
+        first_name="John", last_name="Doe", username="johndoe", password="password1", role=UserRole.Employee)
 
         # User(
         #     first_name="John",
