@@ -7,6 +7,9 @@ import Shifts from '../components/Shift/Shift';
 import Pto from '../components/Pto/Pto';
 import TimeOffRequest from '../components/TimeOff/TimeOff';
 import EditTimeOffRequest from '../components/TimeOff/TimeOffRequest';
+import AllShifts from '../components/AllShift/AllShift';
+import EditShift from '../components/AllShift/AllShiftsEdit';
+import CreateShift from '../components/AllShift/CreateShift';
 import Layout from './Layout';
 
 export const router = createBrowserRouter([
@@ -44,7 +47,19 @@ export const router = createBrowserRouter([
       {
         path: 'timeoff/edit/:id',
         element: <EditTimeOffRequest />
-      }
+      },
+      {
+        path: 'allshifts',
+        element: <AllShifts />
+      },
+      {
+        path: 'shift/edit/:shiftId',
+        element: <EditShift />  
+      },
+      {
+        path: 'shift/create',
+        element: <CreateShift /> 
+      },
     ],
   },
 ]);

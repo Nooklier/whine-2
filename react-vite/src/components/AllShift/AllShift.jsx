@@ -1,40 +1,46 @@
-import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { fetchShiftsByUserId } from '../../redux/shift';  
-import "./Dashboard.css";
-import { NavLink } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { fetchAllShifts, deleteShiftById } from "../../redux/shift";
 import { thunkLogout } from "../../redux/session";
+import { NavLink } from "react-router-dom";
 import searchIcon from '../../../photos/search-icon.png';
 import scheduleIcon from '../../../photos/schedule-icon.png';
 import timeOffIcon from '../../../photos/time-off-icon.png';
 import ptoIcon from '../../../photos/pto-icon.png';
 import settingIcon from '../../../photos/setting-icon.png';
 import signOutIcon from '../../../photos/sign-out-icon.png';
+import './AllShifts.css';
 
-function Dashboard() {
-    const user = useSelector(state => state.session.user);
-    const shifts = useSelector(state => state.shifts.shifts);
+function AllShifts() {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const allShifts = useSelector(state => state.shifts.allShifts);
+    const user = useSelector(state => state.session.user);
 
     useEffect(() => {
-        dispatch(fetchShiftsByUserId());
+        dispatch(fetchAllShifts());
     }, [dispatch]);
 
     const handleLogout = () => {
         dispatch(thunkLogout());
     };
 
-    const getNext7Shifts = (shifts) => {
-        const today = new Date();
-        
-        const sortedShifts = shifts
-            .filter(shift => new Date(shift.shift_date) >= today)
-            .sort((a, b) => new Date(a.shift_date) - new Date(b.shift_date));
-        
-        return sortedShifts.slice(0, 7);
+    const handleEditShift = (shiftId) => {
+        navigate(`/shift/edit/${shiftId}`);
     };
 
-    const next7Shifts = getNext7Shifts(shifts);
+    const handleDeleteShift = (shiftId) => {
+        dispatch(deleteShiftById(shiftId));
+    };
+
+    const handleCreateShift = () => {
+        navigate('/shift/create');
+    };
+
+    const sortedShifts = Array.isArray(allShifts)
+        ? allShifts.sort((a, b) => new Date(a.shift_date) - new Date(b.shift_date))
+        : [];
 
     return (
         <div className="dashboard-container">
@@ -48,7 +54,7 @@ function Dashboard() {
                         </div>
                         <div className="name">{user.first_name} {user.last_name}</div>
                         <div className="menu-container">
-                            <div className="nav-link-container">
+                            <div className="nav-link-container-schedule">
                                 <img className='navlink-icon' src={scheduleIcon} alt="schedule"></img>
                                 <NavLink className='nav-link' to='/shift'>SCHEDULE</NavLink>
                             </div>
@@ -60,12 +66,10 @@ function Dashboard() {
                                 <img className='navlink-icon' src={ptoIcon} alt="pto"></img>
                                 <NavLink className='nav-link' to='/pto'>PTO</NavLink>
                             </div>
-                            {user.role === 'Manager' && (
-                                <div className="nav-link-container">
-                                    <img className='navlink-icon' src={scheduleIcon} alt="all shifts"></img>
-                                    <NavLink className='nav-link' to='/allshifts'>ALL SHIFTS</NavLink>
-                                </div>
-                            )}
+                            <div className="nav-link-container">
+                                <img className='navlink-icon' src={scheduleIcon} alt="all shifts"></img>
+                                <NavLink className='nav-link' to='/allshifts'>ALL SHIFTS</NavLink>
+                            </div>
                         </div>
                     </div>
 
@@ -76,22 +80,34 @@ function Dashboard() {
                         </div>
                         <div className="left-bottom-container">
                             <img className='navlink-icon' src={signOutIcon} alt="sign out"></img>
-                            <NavLink style={{ textDecoration: 'none' }} onClick={handleLogout} to='/'>SIGN OUT</NavLink>
+                            <NavLink style={{textDecoration: 'none'}} onClick={handleLogout} to='/'>SIGN OUT</NavLink>
                         </div>
                     </div>
                 </div>
 
                 <div className="middle-container">
-                    <div className="dashboard">Dashboard</div>
+                    <div className="dashboard">All Shifts</div>
                     <div className="upcoming-container">
-                        <div className="upcoming">Upcoming</div>
+                        <div className="upcoming">All Shifts</div>
+                        <button onClick={handleCreateShift}>Create New Shift</button>
                         <div className="ul-container">
-                            {next7Shifts.map(shift => (
-                                <div className='upcoming-ul' key={shift.id}>
-                                    <div> {shift.shift_date} </div>
-                                    <div> {shift.shift_start} - {shift.shift_end} </div>
-                                </div>
-                            ))}
+                            {Array.isArray(sortedShifts) && sortedShifts.length > 0 ? (
+                                sortedShifts.map(shift => (
+                                    <div key={shift.id}>
+                                        <div className='schedule'>
+                                            <div>{shift.shift_date}</div>
+                                            <div className="schedule-inside">
+                                                <div>{shift.shift_start} - {shift.shift_end}</div>
+                                                <div>{shift.user?.first_name} {shift.user?.last_name}</div>
+                                                <button onClick={() => handleEditShift(shift.id)}>Edit</button>
+                                                <button onClick={() => handleDeleteShift(shift.id)}>Delete</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))
+                            ) : (
+                                <div>No shifts available.</div>
+                            )}
                         </div>
                     </div>
                 </div>
@@ -114,4 +130,4 @@ function Dashboard() {
     );
 }
 
-export default Dashboard;
+export default AllShifts;

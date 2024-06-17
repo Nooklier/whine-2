@@ -99,6 +99,12 @@ function TimeOffRequest() {
                                 <img className='navlink-icon' src={ptoIcon} alt="pto"></img>
                                 <NavLink className='nav-link' to='/pto'>PTO</NavLink>
                             </div>
+                            {user.role === 'Manager' && (
+                                <div className="nav-link-container">
+                                    <img className='navlink-icon' src={scheduleIcon} alt="all shifts"></img>
+                                    <NavLink className='nav-link' to='/allshifts'>ALL SHIFTS</NavLink>
+                                </div>
+                            )}
                         </div>
                     </div>
 

@@ -43,7 +43,7 @@ def create_shift():
     db.session.add(new_shift)
     db.session.commit()
 
-    return jsonify({'message': 'Shift created successfully.'}), 201
+    return jsonify(new_shift.to_dict()), 201
 
 
 # Get all shifts for the current user
@@ -103,39 +103,30 @@ def get_shift_by_id(shift_id):
 @shift_routes.route('/update/<int:shift_id>', methods=['PUT'])
 @login_required
 def update_shift(shift_id):
-
-    # Query the shift by its ID
     shift = Shift.query.get(shift_id)
-
-    # Check if the shift exists
     if not shift:
         return jsonify({'message': 'Shift not found.'}), 404
 
-    # Check if the user is a manager
+    data = request.get_json()
+    shift_date = data.get('shift_date')
+    shift_start = data.get('shift_start')
+    shift_end = data.get('shift_end')
+    user_id = data.get('user_id')
+
     if current_user.role == UserRole.Manager:
-        # Managers cannot update their own shifts
-        if shift.user_id == current_user.id:
-            return jsonify({'message': 'Unauthorized access. Managers cannot update their own shifts.'}), 403
-        # Managers cannot update shifts of other managers
-        if shift.user.role == UserRole.Manager:
-            return jsonify({'message': 'Unauthorized access. Managers cannot update shifts of other managers.'}), 403
-        # Managers can update all fields
-        data = request.get_json()
-        shift.update(data)
-
+        if shift_date:
+            shift.shift_date = datetime.strptime(shift_date, '%Y-%m-%d').date()
+        if shift_start:
+            shift.shift_start = datetime.strptime(shift_start, '%H:%M').time()
+        if shift_end:
+            shift.shift_end = datetime.strptime(shift_end, '%H:%M').time()
+        if user_id:
+            shift.user_id = user_id
     else:
-        # Employees can only update their own shifts
-        if shift.user_id != current_user.id:
-            return jsonify({'message': 'Unauthorized access. You can only update your own shifts.'}), 403
-        # Employees can only update the 'available' field
-        data = request.get_json()
-        if 'available' in data:
-            shift.available = data['available']
+        return jsonify({'message': 'Unauthorized access. Only managers can update shifts.'}), 403
 
-    # Commit the changes to the database
     db.session.commit()
-
-    return jsonify({'message': 'Shift updated successfully.'}), 200 
+    return jsonify(shift.to_dict()), 200
 
 
 

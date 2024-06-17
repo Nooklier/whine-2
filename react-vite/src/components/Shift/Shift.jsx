@@ -53,6 +53,12 @@ function Shifts() {
                                 <img className='navlink-icon' src={ptoIcon} alt="pto"></img>
                                 <NavLink className='nav-link' to='/pto'>PTO</NavLink>
                             </div>
+                            {user.role === 'Manager' && (
+                                <div className="nav-link-container">
+                                    <img className='navlink-icon' src={scheduleIcon} alt="all shifts"></img>
+                                    <NavLink className='nav-link' to='/allshifts'>ALL SHIFTS</NavLink>
+                                </div>
+                            )}
                         </div>
                     </div>
 
@@ -75,13 +81,12 @@ function Shifts() {
                         <div className="ul-container">
                             {sortedShifts.map(shift => (
                                 <div key={shift.id}>
-                                    <NavLink className='schedule' to={`/shift/${shift.id}`}>
+                                    <div className='schedule'>
                                         <div>{shift.shift_date}</div>
                                         <div className="schedule-inside">
                                             <div>{shift.shift_start} - {shift.shift_end}</div>
-                                            <button>give away</button>
                                         </div>
-                                    </NavLink>
+                                    </div>
                                 </div>
                             ))}
                         </div>

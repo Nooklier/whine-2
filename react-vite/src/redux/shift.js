@@ -1,16 +1,36 @@
 /********************* ACTION TYPES *********************/
 
 const UPDATE_SHIFT = 'shifts/updateShift';
+const UPDATE_SHIFT_SUCCESS = 'shifts/updateShiftSuccess';
+const UPDATE_SHIFT_FAILURE = 'shifts/updateShiftFailure';
+
+const DELETE_SHIFT = 'shifts/deleteShift';
+const DELETE_SHIFT_SUCCESS = 'shifts/deleteShiftSuccess';
+const DELETE_SHIFT_FAILURE = 'shifts/deleteShiftFailure';
+
+const CREATE_SHIFT = 'shifts/createShift';
+const CREATE_SHIFT_SUCCESS = 'shifts/createShiftSuccess';
+const CREATE_SHIFT_FAILURE = 'shifts/createShiftFailure';
+
 const GET_SHIFT_BY_ID = 'shifts/getShiftById';
 const GET_SHIFTS_BY_USER_ID = 'shifts/getShiftsByUserId';
 const GET_ALL_SHIFTS = 'shifts/getAllShifts';
-const UPDATE_SHIFT_AVAILABILITY = 'shifts/updateShiftAvailability';
+
 
 /********************* ACTION CREATORS *********************/
 
-const updateShift = (shift) => ({
+const updateShift = () => ({
   type: UPDATE_SHIFT,
+});
+
+const updateShiftSuccess = (shift) => ({
+  type: UPDATE_SHIFT_SUCCESS,
   payload: shift
+});
+
+const updateShiftFailure = (error) => ({
+  type: UPDATE_SHIFT_FAILURE,
+  payload: error
 });
 
 const getShiftById = (shift) => ({
@@ -28,14 +48,41 @@ const getAllShifts = (shifts) => ({
   payload: shifts
 });
 
-const updateShiftAvailability = (shiftId, available) => ({
-  type: UPDATE_SHIFT_AVAILABILITY,
-  payload: { shiftId, available }
+const deleteShift = () => ({
+  type: DELETE_SHIFT,
 });
+
+const deleteShiftSuccess = (shiftId) => ({
+  type: DELETE_SHIFT_SUCCESS,
+  payload: shiftId
+});
+
+const deleteShiftFailure = (error) => ({
+  type: DELETE_SHIFT_FAILURE,
+  payload: error
+});
+
+const createShift = () => ({
+  type: CREATE_SHIFT,
+});
+
+const createShiftSuccess = (shift) => ({
+  type: CREATE_SHIFT_SUCCESS,
+  payload: shift
+});
+
+const createShiftFailure = (error) => ({
+  type: CREATE_SHIFT_FAILURE,
+  payload: error
+});
+
+
+
 
 /********************* THUNK ACTION CREATORS *********************/
 
 export const updateShiftInfo = (shiftId, updatedInfo) => async (dispatch) => {
+  dispatch(updateShift());
   try {
     const response = await fetch(`/api/shift/update/${shiftId}`, {
       method: 'PUT',
@@ -47,32 +94,13 @@ export const updateShiftInfo = (shiftId, updatedInfo) => async (dispatch) => {
 
     if (response.ok) {
       const updatedShift = await response.json();
-      dispatch(updateShift(updatedShift));
+      dispatch(updateShiftSuccess(updatedShift));
     } else {
-      console.error("Failed to update shift: HTTP status", response.status);
+      const error = await response.text();
+      dispatch(updateShiftFailure(error));
     }
   } catch (error) {
-    console.error("Error updating shift:", error);
-  }
-}
-
-export const updateShiftAvailabilityThunk = (shiftId, available) => async (dispatch) => {
-  try {
-    const response = await fetch(`/api/shift/update/${shiftId}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ available })
-    });
-
-    if (response.ok) {
-      dispatch(updateShiftAvailability(shiftId, available));
-    } else {
-      console.error('Failed to update shift availability: HTTP status', response.status);
-    }
-  } catch (error) {
-    console.error('Error updating shift availability:', error);
+    dispatch(updateShiftFailure(error.toString()));
   }
 };
 
@@ -88,7 +116,7 @@ export const fetchShiftById = (shiftId) => async (dispatch) => {
   } catch (error) {
     console.error("Error fetching shift by ID:", error);
   }
-}
+};
 
 export const fetchShiftsByUserId = () => async (dispatch) => {
   try {
@@ -120,11 +148,59 @@ export const fetchAllShifts = () => async (dispatch) => {
   }
 };
 
+export const deleteShiftById = (shiftId) => async (dispatch) => {
+  dispatch(deleteShift());
+  try {
+    const response = await fetch(`/api/shift/delete/${shiftId}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+
+    if (response.ok) {
+      dispatch(deleteShiftSuccess(shiftId));
+    } else {
+      const error = await response.text();
+      dispatch(deleteShiftFailure(error));
+    }
+  } catch (error) {
+    dispatch(deleteShiftFailure(error.toString()));
+  }
+};
+
+export const createNewShift = (shiftData) => async (dispatch) => {
+  dispatch(createShift());
+  try {
+    const response = await fetch('/api/shift/create', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(shiftData)
+    });
+
+    if (response.ok) {
+      const newShift = await response.json();
+      dispatch(createShiftSuccess(newShift));
+    } else {
+      const error = await response.text();
+      dispatch(createShiftFailure(error));
+    }
+  } catch (error) {
+    dispatch(createShiftFailure(error.toString()));
+  }
+};
+
+
+
 /********************* REDUCERS *********************/
 
 const initialState = { 
   shifts: [],
-  allShifts: []
+  allShifts: [],
+  loading: false,
+  error: null,
 };
 
 let updatedShifts;
@@ -132,24 +208,47 @@ let updatedShifts;
 function shiftsReducer(state = initialState, action) {
   switch (action.type) {
     case UPDATE_SHIFT:
+      return { ...state, loading: true, error: null };
+    case UPDATE_SHIFT_SUCCESS:
       updatedShifts = state.shifts.map(shift =>
         shift.id === action.payload.id ? action.payload : shift
       );
-      return { ...state, shifts: updatedShifts };
-    case UPDATE_SHIFT_AVAILABILITY:
-      updatedShifts = state.shifts.map(shift =>
-        shift.id === action.payload.shiftId ? { ...shift, available: action.payload.available } : shift
-      );
-      return { ...state, shifts: updatedShifts };
+      return { ...state, 
+        shifts: updatedShifts, 
+        allShifts: state.allShifts.map(shift =>
+          shift.id === action.payload.id ? action.payload : shift
+        ),
+        loading: false };
+    case UPDATE_SHIFT_FAILURE:
+      return { ...state, loading: false, error: action.payload };
     case GET_SHIFT_BY_ID:
       return { ...state, shift: action.payload };
     case GET_SHIFTS_BY_USER_ID:
       return { ...state, shifts: action.payload };
     case GET_ALL_SHIFTS:
       return { ...state, allShifts: action.payload };
+    case DELETE_SHIFT:
+      return { ...state, loading: true, error: null };
+    case DELETE_SHIFT_SUCCESS:
+      return {
+        ...state,
+        shifts: state.shifts.filter(shift => shift.id !== action.payload),
+        allShifts: state.allShifts.filter(shift => shift.id !== action.payload),
+        loading: false
+      };
+    case DELETE_SHIFT_FAILURE:
+      return { ...state, loading: false, error: action.payload };
+    case CREATE_SHIFT:
+      return { ...state, loading: true, error: null };
+    case CREATE_SHIFT_SUCCESS:
+      return { ...state, allShifts: [...state.allShifts, action.payload], loading: false };
+    case CREATE_SHIFT_FAILURE:
+      return { ...state, loading: false, error: action.payload };
     default:
       return state;
   }
 }
 
 export default shiftsReducer;
+
+

@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { updateTimeOffRequest, fetchTimeOffRequests } from '../../redux/timeOff/timeOffThunks';
 
 function EditTimeOffRequest() {
     const { id } = useParams();
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const timeOffRequests = useSelector(state => state.timeOff.requests || []);
     const requestToEdit = timeOffRequests.find(request => request.id === parseInt(id));
 
@@ -30,6 +31,7 @@ function EditTimeOffRequest() {
     const handleUpdateTimeOffRequest = () => {
         dispatch(updateTimeOffRequest(id, formData)).then(response => {
             if (response.type === 'UPDATE_TIME_OFF_REQUEST_SUCCESS') {
+                navigate('/timeoff');
             }
         });
     };
