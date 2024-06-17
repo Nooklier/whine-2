@@ -1,6 +1,6 @@
 from datetime import date, time, timedelta
 from random import randint
-from app.models import Shift, db, environment
+from app.models import Shift, db, environment, SCHEMA
 
 def generate_random_date(start_date, end_date):
     """

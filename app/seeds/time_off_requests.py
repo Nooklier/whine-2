@@ -1,5 +1,5 @@
 from datetime import date
-from app.models import db, TimeOffRequest, environment
+from app.models import db, TimeOffRequest, environment, SCHEMA
 from sqlalchemy.sql import text
 
 def seed_time_off_requests():
