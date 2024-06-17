@@ -9,21 +9,24 @@
 .signup-left-container {
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    height: 500px;
 }
 
 .signup-right-container {
     display: flex;
-    justify-content: center;
     align-items: center;
     width: 50%; 
-    padding-right: 75px; 
 }
 
 
 .signup-form-container {
     display: flex;
     flex-direction: column;
+    align-items: center;
     background-color: #444440;
+    width: 500px;
+    height: 800px;
 }
 
 .signup-button {
